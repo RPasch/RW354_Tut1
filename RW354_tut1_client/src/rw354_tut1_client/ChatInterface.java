@@ -129,7 +129,7 @@ public class ChatInterface extends javax.swing.JFrame {
     private void send_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_send_btnActionPerformed
         // TODO add your handling code here:
         msg_txtActionPerformed(evt);
-        Chat_txt.append(username + " : " + msg);
+        Chat_txt.append(username + " : " + msg +"\n");
     }//GEN-LAST:event_send_btnActionPerformed
 
     private void username_txtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_username_txtActionPerformed
@@ -140,7 +140,7 @@ public class ChatInterface extends javax.swing.JFrame {
     private void connect_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connect_btnActionPerformed
         // TODO add your handling code here:
         username_txtActionPerformed(evt);
-        users_txt.append( username );
+        users_txt.append( username + "\n");
     }//GEN-LAST:event_connect_btnActionPerformed
 
     private void msg_txtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_msg_txtActionPerformed
