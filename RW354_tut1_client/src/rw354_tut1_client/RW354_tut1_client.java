@@ -17,6 +17,11 @@ public class RW354_tut1_client {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        ChatInterface chat = new ChatInterface();
+        chat.show();
     }
+    
+    
+    
     
 }
