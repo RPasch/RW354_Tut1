@@ -103,6 +103,9 @@
       </Events>
     </Component>
     <Component class="java.awt.Choice" name="chat_choice_dropdown">
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="chat_choice_dropdown.add(&quot;All&quot;);"/>
+      </AuxValues>
     </Component>
     <Component class="javax.swing.JTextField" name="username_txt">
       <Properties>
@@ -124,6 +127,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Disconnect"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="disconnect_btnActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="msg_txt">
       <Properties>

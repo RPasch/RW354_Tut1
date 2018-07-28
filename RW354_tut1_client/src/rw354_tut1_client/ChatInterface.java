@@ -4,6 +4,9 @@
  * and open the template in the editor.
  */
 package rw354_tut1_client;
+import rw354_tut1_client.RW354_tut1_client;
+import static javafx.application.Platform.exit;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -12,6 +15,8 @@ package rw354_tut1_client;
 public class ChatInterface extends javax.swing.JFrame {
     String username;
     String msg;
+    boolean valid_con = true;
+    boolean valid_usrnm = true;
     
     /**
      * Creates new form ChatInterface
@@ -51,6 +56,8 @@ public class ChatInterface extends javax.swing.JFrame {
             }
         });
 
+        chat_choice_dropdown.add("All");
+
         username_txt.setText("Enter username");
         username_txt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -66,6 +73,11 @@ public class ChatInterface extends javax.swing.JFrame {
         });
 
         disconnect_btn.setText("Disconnect");
+        disconnect_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                disconnect_btnActionPerformed(evt);
+            }
+        });
 
         msg_txt.setText("Enter message");
         msg_txt.addActionListener(new java.awt.event.ActionListener() {
@@ -128,8 +140,10 @@ public class ChatInterface extends javax.swing.JFrame {
 
     private void send_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_send_btnActionPerformed
         // TODO add your handling code here:
+        String msg_choice = chat_choice_dropdown.getSelectedItem();
         msg_txtActionPerformed(evt);
-        Chat_txt.append(username + " : " + msg +"\n");
+        
+        Chat_txt.append(username + " > " + msg_choice + ":" + msg +"\n");
     }//GEN-LAST:event_send_btnActionPerformed
 
     private void username_txtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_username_txtActionPerformed
@@ -139,8 +153,16 @@ public class ChatInterface extends javax.swing.JFrame {
 
     private void connect_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connect_btnActionPerformed
         // TODO add your handling code here:
-        username_txtActionPerformed(evt);
-        users_txt.append( username + "\n");
+        if(!valid_usrnm){
+            JOptionPane.showMessageDialog(rootPane, "Nickname already chosen");
+        }
+        if(valid_con){
+            username_txtActionPerformed(evt);
+            users_txt.append( username + "\n");
+            chat_choice_dropdown.add(username);
+        } else{
+            JOptionPane.showMessageDialog(rootPane, "Connection Failed");
+        }
     }//GEN-LAST:event_connect_btnActionPerformed
 
     private void msg_txtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_msg_txtActionPerformed
@@ -148,6 +170,11 @@ public class ChatInterface extends javax.swing.JFrame {
         msg = msg_txt.getText();
 
     }//GEN-LAST:event_msg_txtActionPerformed
+
+    private void disconnect_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_disconnect_btnActionPerformed
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_disconnect_btnActionPerformed
 
     /**
      * @param args the command line arguments
