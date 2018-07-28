@@ -10,7 +10,9 @@ package rw354_tut1_client;
  * @author rabbp
  */
 public class ChatInterface extends javax.swing.JFrame {
-
+    String username;
+    String msg;
+    
     /**
      * Creates new form ChatInterface
      */
@@ -28,22 +30,19 @@ public class ChatInterface extends javax.swing.JFrame {
     private void initComponents() {
 
         Chat_txt = new java.awt.TextArea();
-        textArea1 = new java.awt.TextArea();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        msg_txt = new javax.swing.JTextArea();
+        users_txt = new java.awt.TextArea();
         send_btn = new javax.swing.JButton();
         chat_choice_dropdown = new java.awt.Choice();
-        jTextField1 = new javax.swing.JTextField();
+        username_txt = new javax.swing.JTextField();
         connect_btn = new javax.swing.JButton();
         disconnect_btn = new javax.swing.JButton();
+        msg_txt = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         Chat_txt.setEditable(false);
 
-        msg_txt.setColumns(20);
-        msg_txt.setRows(5);
-        jScrollPane1.setViewportView(msg_txt);
+        users_txt.setEditable(false);
 
         send_btn.setText("Send");
         send_btn.addActionListener(new java.awt.event.ActionListener() {
@@ -52,16 +51,28 @@ public class ChatInterface extends javax.swing.JFrame {
             }
         });
 
-        jTextField1.setText("Enter username");
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        username_txt.setText("Enter username");
+        username_txt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                username_txtActionPerformed(evt);
             }
         });
 
         connect_btn.setText("Connect");
+        connect_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                connect_btnActionPerformed(evt);
+            }
+        });
 
         disconnect_btn.setText("Disconnect");
+
+        msg_txt.setText("Enter message");
+        msg_txt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                msg_txtActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -69,20 +80,20 @@ public class ChatInterface extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(Chat_txt, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(layout.createSequentialGroup()
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(chat_choice_dropdown, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(username_txt, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(32, 32, 32)
+                            .addComponent(connect_btn)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(32, 32, 32)
-                        .addComponent(connect_btn)))
+                        .addComponent(msg_txt, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(chat_choice_dropdown, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(textArea1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(users_txt, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(send_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(disconnect_btn))
                 .addContainerGap())
@@ -92,13 +103,13 @@ public class ChatInterface extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(username_txt, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(connect_btn)
                     .addComponent(disconnect_btn))
                 .addGap(44, 44, 44)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(Chat_txt, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textArea1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(users_txt, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -106,10 +117,10 @@ public class ChatInterface extends javax.swing.JFrame {
                             .addComponent(chat_choice_dropdown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(send_btn))
                         .addGap(49, 49, 49))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(24, Short.MAX_VALUE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(37, 37, 37)
+                        .addComponent(msg_txt, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(39, Short.MAX_VALUE))))
         );
 
         pack();
@@ -117,11 +128,26 @@ public class ChatInterface extends javax.swing.JFrame {
 
     private void send_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_send_btnActionPerformed
         // TODO add your handling code here:
+        msg_txtActionPerformed(evt);
+        Chat_txt.append(username + " : " + msg);
     }//GEN-LAST:event_send_btnActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void username_txtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_username_txtActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+        username = username_txt.getText();
+    }//GEN-LAST:event_username_txtActionPerformed
+
+    private void connect_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connect_btnActionPerformed
+        // TODO add your handling code here:
+        username_txtActionPerformed(evt);
+        users_txt.append( username );
+    }//GEN-LAST:event_connect_btnActionPerformed
+
+    private void msg_txtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_msg_txtActionPerformed
+        // TODO add your handling code here:
+        msg = msg_txt.getText();
+
+    }//GEN-LAST:event_msg_txtActionPerformed
 
     /**
      * @param args the command line arguments
@@ -163,10 +189,9 @@ public class ChatInterface extends javax.swing.JFrame {
     private java.awt.Choice chat_choice_dropdown;
     private javax.swing.JButton connect_btn;
     private javax.swing.JButton disconnect_btn;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextArea msg_txt;
+    private javax.swing.JTextField msg_txt;
     private javax.swing.JButton send_btn;
-    private java.awt.TextArea textArea1;
+    private javax.swing.JTextField username_txt;
+    private java.awt.TextArea users_txt;
     // End of variables declaration//GEN-END:variables
 }

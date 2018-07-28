@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package rw354_tut1_client;
-import rw354_tut1_client.MainFrame;
+import rw354_tut1_client.ChatInterface;
 /**
  *
  * @author 18214304
