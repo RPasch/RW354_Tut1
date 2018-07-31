@@ -9,8 +9,9 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import rw354_tut1_client.ChatInterface;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
@@ -21,14 +22,18 @@ public class RW354_tut1_client {
     public boolean valid_connection = true;
     private static  int port = 8000;
     static String serverName = "1";
-
+    static OutputStream outToServer;
+    static DataOutputStream out;
+    static InputStream inFromServer;
+    static DataInputStream in;
+    static Socket client;
     public static boolean valid_usrnm = true;
     public static boolean valid_con = true;
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         // TODO code application logic here
         /*if ( args.length<1){
             System.out.println("more inputs " + args.length);
@@ -40,26 +45,28 @@ public class RW354_tut1_client {
         
         ChatInterface chat = new ChatInterface();
         chat.show();
-        
+        while(true){
+            String message = receiveMsg();
+            String who = receiveMsg();
+            chat.printMsg(message, who);
+        }
         
     }
-    public static void connect(String serverName) throws IOException {
+    public static void connect(String serverName, String usr) throws IOException {
         
        try {
          System.out.println("Connecting to " + serverName + " on port " + port);
-         Socket client = new Socket(serverName, port);
+         client = new Socket(serverName, port);
          valid_usrnm = true;
          valid_usrnm = true;
          System.out.println("Just connected to " + client.getRemoteSocketAddress());
-         OutputStream outToServer = client.getOutputStream();
-         DataOutputStream out = new DataOutputStream(outToServer);
+         outToServer = client.getOutputStream();
+         out = new DataOutputStream(outToServer);
+         out.writeUTF(usr);
+         //out.writeUTF("Hello from " + client.getLocalSocketAddress());
          
-         out.writeUTF("Hello from " + client.getLocalSocketAddress());
-         InputStream inFromServer = client.getInputStream();
-         DataInputStream in = new DataInputStream(inFromServer);
-         
-         System.out.println("Server says " + in.readUTF());
-         client.close();
+         //String inputFromServer = in.readUTF(); // this is fucking up my shit
+         //System.out.println("Server says " + in.readUTF());
       } catch (IOException e) {
       }
         
@@ -69,6 +76,31 @@ public class RW354_tut1_client {
         return serverName;
     }
     
+    public static void sendMessage(String msg, String usr) throws IOException{
+         out.writeUTF(usr);
+         out.writeUTF(msg);
+       
+        
+    }
+    
+    public static void disconnect(){
+        try {
+            client.close();
+        } catch (IOException ex) {
+            Logger.getLogger(RW354_tut1_client.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    
+    }
+    public static String receiveMsg() throws IOException{
+       String received_msg = "";
+       inFromServer = client.getInputStream();
+       in = new DataInputStream(inFromServer);
+       String inputFromServer = in.readUTF();
+       received_msg = inputFromServer;
+       
+       return received_msg;
+    }
     
     
 }
