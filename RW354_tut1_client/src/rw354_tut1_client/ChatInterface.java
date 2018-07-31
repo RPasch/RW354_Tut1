@@ -143,10 +143,17 @@ public class ChatInterface extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void send_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_send_btnActionPerformed
-        // TODO add your handling code here:
-        String msg_choice = chat_choice_dropdown.getSelectedItem();
-        msg_txtActionPerformed(evt);
-        printMsg(msg, msg_choice);
+        try {
+            // TODO add your handling code here:
+            String msg_choice = chat_choice_dropdown.getSelectedItem();
+            msg_txtActionPerformed(evt);
+            RW354_tut1_client.sendMessage(msg, msg_choice);
+            
+            
+            printMsg(msg, msg_choice);
+        } catch (IOException ex) {
+            Logger.getLogger(ChatInterface.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_send_btnActionPerformed
 
     private void username_txtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_username_txtActionPerformed
@@ -157,12 +164,13 @@ public class ChatInterface extends javax.swing.JFrame {
     private void connect_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connect_btnActionPerformed
         try {
             // TODO add your handling code here:
-            connect(serverName);
+            username_txtActionPerformed(evt);
+            connect(serverName, username);
             if(!valid_usrnm){
                 JOptionPane.showMessageDialog(rootPane, "Nickname already chosen");
             }
             if(valid_con){
-                username_txtActionPerformed(evt);
+                
                 addUsr(username);
             } else{
                 JOptionPane.showMessageDialog(rootPane, "Connection Failed");
@@ -180,6 +188,7 @@ public class ChatInterface extends javax.swing.JFrame {
 
     private void disconnect_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_disconnect_btnActionPerformed
         // TODO add your handling code here:
+        RW354_tut1_client.disconnect();
         dispose();
     }//GEN-LAST:event_disconnect_btnActionPerformed
     public void printMsg(String msg, String toWho){
