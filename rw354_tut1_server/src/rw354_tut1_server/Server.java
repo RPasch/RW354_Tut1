@@ -6,7 +6,7 @@ import java.net.Socket;
 public class Server {
     // use concurrent hashmap
     public static void main(String[] args) {
-        int portNumber = Integer.parseInt(args[0]);
+        int portNumber = 8000;//Integer.parseInt(args[0]);
         ServerSocket serverSocket = null;
         Socket clientSocket = null;        
         
