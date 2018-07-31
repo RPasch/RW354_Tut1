@@ -19,8 +19,9 @@ import java.net.Socket;
  */
 public class RW354_tut1_client {
     public boolean valid_connection = true;
-    private static String serverName = "host";
     private static  int port = 8000;
+    static String serverName = "1";
+
     public static boolean valid_usrnm = true;
     public static boolean valid_con = true;
 
@@ -29,13 +30,20 @@ public class RW354_tut1_client {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        /*if ( args.length<1){
+            System.out.println("more inputs " + args.length);
+            
+        }
+        else{*/
+        serverName = args[0];
+       // }
         
         ChatInterface chat = new ChatInterface();
         chat.show();
         
         
     }
-    public static void connect() throws IOException {
+    public static void connect(String serverName) throws IOException {
         
        try {
          System.out.println("Connecting to " + serverName + " on port " + port);
@@ -56,6 +64,11 @@ public class RW354_tut1_client {
       }
         
     }
+
+    public static String getServerName() {
+        return serverName;
+    }
+    
     
     
 }

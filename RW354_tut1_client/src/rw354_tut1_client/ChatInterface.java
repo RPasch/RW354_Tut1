@@ -21,14 +21,14 @@ import static rw354_tut1_client.RW354_tut1_client.valid_usrnm;
 public class ChatInterface extends javax.swing.JFrame {
     String username;
     String msg;
-    
+    String serverName = RW354_tut1_client.getServerName();
     /**
      * Creates new form ChatInterface
      */
     public ChatInterface() {
         initComponents();
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -157,7 +157,7 @@ public class ChatInterface extends javax.swing.JFrame {
     private void connect_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connect_btnActionPerformed
         try {
             // TODO add your handling code here:
-            connect();
+            connect(serverName);
             if(!valid_usrnm){
                 JOptionPane.showMessageDialog(rootPane, "Nickname already chosen");
             }
