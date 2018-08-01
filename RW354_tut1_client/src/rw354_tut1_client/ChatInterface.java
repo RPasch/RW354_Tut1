@@ -174,7 +174,7 @@ public class ChatInterface extends javax.swing.JFrame {
             }
             if(valid_con){
                 
-                addUsr(username);
+               
             } else{
                 JOptionPane.showMessageDialog(rootPane, "Connection Failed");
             }
