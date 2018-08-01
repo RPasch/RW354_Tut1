@@ -5,6 +5,9 @@
  */
 package rw354_tut1_client;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import rw354_tut1_client.RW354_tut1_client;
@@ -192,12 +195,19 @@ public class ChatInterface extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_disconnect_btnActionPerformed
     public void printMsg(String msg, String toWho){
-        Chat_txt.append( username + " > " + toWho + ":" + msg +"\n");
+        Chat_txt.append( toWho + ":" + msg +"\n");
     }
     public void addUsr(String usr){
         users_txt.append( usr + "\n");
         chat_choice_dropdown.add(usr);
         
+    }
+    public void addAllusers(String list_of_users) {
+        List<String> list = Arrays.asList(list_of_users.split(","));
+        for (int i = 0; i < list.size(); i++) {
+                        addUsr(list.get(i));
+
+        }
     }
     /**
      * @param args the command line arguments
@@ -244,4 +254,6 @@ public class ChatInterface extends javax.swing.JFrame {
     private javax.swing.JTextField username_txt;
     private java.awt.TextArea users_txt;
     // End of variables declaration//GEN-END:variables
+
+    
 }

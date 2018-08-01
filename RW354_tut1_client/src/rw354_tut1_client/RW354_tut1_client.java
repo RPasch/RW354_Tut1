@@ -101,7 +101,7 @@ public class RW354_tut1_client {
        in = new DataInputStream(inFromServer);
        String inputFromServer = in.readUTF();
        received_msg = inputFromServer;
-       
+        System.out.println(received_msg);
        return received_msg;
     }
     
