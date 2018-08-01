@@ -32,10 +32,13 @@ public class ClientConnecter extends Thread {
                 inFromClient = clientSocket.getInputStream();
                 in = new DataInputStream(inFromClient);
                 
-                System.out.println("Welcome: "+in.readUTF()+"to the chat");
+                String username = in.readUTF();
+                
+                Server.listOfUsers.put(username, sh);
+                
+                System.out.println("Welcome: "+username+"to the chat");
                 
                 
-                //System.out.println("new user connected");
                  
             } catch (Exception e) {
                 System.err.println(e);

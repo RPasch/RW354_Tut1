@@ -6,12 +6,15 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Server extends Thread{
     static OutputStream outFromServer;
     static DataOutputStream out;
     static InputStream inFromClient;
     static DataInputStream in;
+    public static ConcurrentHashMap<String, SocketHandler> listOfUsers = new ConcurrentHashMap<>();
     
     // use concurrent hashmap
     public static void main(String[] args) {
@@ -65,9 +68,14 @@ public class Server extends Thread{
         try {
             inFromClient = clientSocket.getInputStream();
             outFromServer = clientSocket.getOutputStream();
+            
             in = new DataInputStream(inFromClient);
             out = new DataOutputStream(outFromServer);
             System.out.println(in.readUTF());
+            out.writeUTF("hi");
+            out.writeUTF("hi423");
+            out.writeUTF("fchhhhhhhhhhhhhhhhhhh");
+            out.writeUTF("h4444");
             System.out.println(in.readUTF());
             System.out.println(in.readUTF());
         } catch (Exception e) {
