@@ -52,7 +52,7 @@ public class Server extends Thread{
                 //add to the hashmap
                 //t.start();
                 
-            System.out.println("new user connected");
+            //System.out.println("new user connected");
                  
         } catch (Exception e) {
                 System.err.println(e);
@@ -61,6 +61,7 @@ public class Server extends Thread{
         ClientConnecter connector = new ClientConnecter(serverSocket, clientSocket);
         connector.start();
         System.out.println("gtrhtgte");
+        
         try {
             inFromClient = clientSocket.getInputStream();
             outFromServer = clientSocket.getOutputStream();
@@ -77,3 +78,4 @@ public class Server extends Thread{
     
     
 }
+//ip route get 8.8.8.8 | awk '{print $NF; exit}'
