@@ -8,6 +8,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import static rw354_tut1_server.ClientConnecter.out;
 
 public class Server extends Thread{
     static OutputStream outFromServer;
@@ -48,9 +49,11 @@ public class Server extends Thread{
 //           }
 //        }
 
+        SocketHandler sh = null;    
         try {
             clientSocket = serverSocket.accept();
-            SocketHandler sh = new SocketHandler(clientSocket);
+            sh = new SocketHandler(clientSocket);
+            
                 //Thread t = new Thread(sh);
                 //add to the hashmap
                 //t.start();
@@ -71,17 +74,34 @@ public class Server extends Thread{
             
             in = new DataInputStream(inFromClient);
             out = new DataOutputStream(outFromServer);
+            
+            String username = in.readUTF();
+            System.out.println("Welcome: "+username+"to the chat");
+            
+            listOfUsers.put(username, sh);
+            
+            String userList = getListOfUsers();
+            out.writeUTF(userList);
+            
             System.out.println(in.readUTF());
-            out.writeUTF("hi");
-            out.writeUTF("hi423");
-            out.writeUTF("fchhhhhhhhhhhhhhhhhhh");
-            out.writeUTF("h4444");
             System.out.println(in.readUTF());
             System.out.println(in.readUTF());
         } catch (Exception e) {
             System.err.println("SERVER: "+ e);
         }
         
+    }
+    
+    public static String getListOfUsers() {
+        String userList = "";
+        
+        for (String key : Server.listOfUsers.keySet()) {
+            userList = userList + key + ",";
+        }
+        
+        userList = userList.substring(0, userList.length() - 1);
+        
+        return userList;
     }
     
     
