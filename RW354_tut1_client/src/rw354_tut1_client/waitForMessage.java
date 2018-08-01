@@ -37,13 +37,21 @@ public class waitForMessage extends Thread {
     
      public static void waitForMsg(ChatInterface chat) throws IOException{
         String list_of_users = RW354_tut1_client.receiveMsg();
+        chat.addAllusers(list_of_users);
          while(true){
             
+            String anything = RW354_tut1_client.receiveMsg();
+            if(anything.charAt(0) == '&'){
+                String connectedUsr = anything.substring(1, anything.length());
+                chat.addUsr(connectedUsr);
+
+            }else{
+                
+                String who = anything;
+                String message = RW354_tut1_client.receiveMsg();
+                chat.printMsg(message, who);
+            }
             
-            String who = RW354_tut1_client.receiveMsg();
-            String message = RW354_tut1_client.receiveMsg();
-            chat.addUsr(who);
-            chat.printMsg(message, who);
         }
      }
     
