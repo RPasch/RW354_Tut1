@@ -29,11 +29,11 @@ public class RW354_tut1_client {
     static Socket client;
     public static boolean valid_usrnm = true;
     public static boolean valid_con = true;
-
+    public static ChatInterface chat ;
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException  {
         // TODO code application logic here
         /*if ( args.length<1){
             System.out.println("more inputs " + args.length);
@@ -42,14 +42,13 @@ public class RW354_tut1_client {
         else{*/
         serverName = args[0];
        // }
-        
-        ChatInterface chat = new ChatInterface();
+       
+        String message ;
+        String who ;
+        chat = new ChatInterface();
         chat.show();
-        while(true){
-            String message = receiveMsg();
-            String who = receiveMsg();
-            chat.printMsg(message, who);
-        }
+        
+        
         
     }
     public static void connect(String serverName, String usr) throws IOException {
@@ -63,6 +62,9 @@ public class RW354_tut1_client {
          outToServer = client.getOutputStream();
          out = new DataOutputStream(outToServer);
          out.writeUTF(usr);
+         waitForMessage waitFor = new waitForMessage(chat);
+
+         waitFor.start();
          //out.writeUTF("Hello from " + client.getLocalSocketAddress());
          
          //String inputFromServer = in.readUTF(); // this is fucking up my shit
@@ -93,7 +95,8 @@ public class RW354_tut1_client {
     
     }
     public static String receiveMsg() throws IOException{
-       String received_msg = "";
+       String received_msg = "sfv";
+        System.out.println(client);
        inFromServer = client.getInputStream();
        in = new DataInputStream(inFromServer);
        String inputFromServer = in.readUTF();
@@ -102,5 +105,10 @@ public class RW354_tut1_client {
        return received_msg;
     }
     
+ 
+   
     
-}
+    }
+    
+    
+
