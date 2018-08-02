@@ -4,8 +4,10 @@ import java.net.Socket;
 
 public class SocketHandler implements Runnable {
 
-    public SocketHandler(Socket s) {
-        
+    private Socket clientSocket;
+    
+    public SocketHandler(Socket clientSocket) {
+        this.clientSocket = clientSocket;
     }
     
     
@@ -13,6 +15,16 @@ public class SocketHandler implements Runnable {
     @Override
     public void run() {
         
+    }
+    
+    public void listen() {
+        while(true) {
+            
+        }
+    }
+    
+    public Socket getClientSocket(){
+        return clientSocket;
     }
     
 }

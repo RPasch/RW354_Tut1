@@ -2,12 +2,17 @@ package rw354_tut1_server;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import static rw354_tut1_server.ClientConnecter.out;
 
 public class Server extends Thread{
@@ -32,22 +37,6 @@ public class Server extends Thread{
         } catch (Exception e) {
             System.exit(0);
         }
-        
-        
-//        while(true){
-//            try {
-//                clientSocket = serverSocket.accept();
-//                SocketHandler sh = new SocketHandler(clientSocket);
-//                Thread t = new Thread(sh);
-//                //add to the hashmap
-//                t.start();
-//                
-//                System.out.println("new user connected");
-//                 
-//           } catch (Exception e) {
-//               
-//           }
-//        }
 
         SocketHandler sh = null;    
         try {
@@ -69,6 +58,8 @@ public class Server extends Thread{
         System.out.println("gtrhtgte");
         
         try {
+            
+            
             inFromClient = clientSocket.getInputStream();
             outFromServer = clientSocket.getOutputStream();
             
@@ -86,6 +77,15 @@ public class Server extends Thread{
             System.out.println(in.readUTF());
             System.out.println(in.readUTF());
             System.out.println(in.readUTF());
+            System.out.println(in.readUTF());
+            System.out.println(in.readUTF());
+            System.out.println(in.readUTF());
+            System.out.println(in.readUTF());
+            System.out.println(in.readUTF());
+            System.out.println(in.readUTF());
+            
+            in.close();
+            out.close();
         } catch (Exception e) {
             System.err.println("SERVER: "+ e);
         }
@@ -95,7 +95,7 @@ public class Server extends Thread{
     public static String getListOfUsers() {
         String userList = "";
         
-        for (String key : Server.listOfUsers.keySet()) {
+        for (String key : listOfUsers.keySet()) {
             userList = userList + key + ",";
         }
         
@@ -104,6 +104,28 @@ public class Server extends Thread{
         return userList;
     }
     
+    public static void broadcast(String message) {
+        OutputStream outFromServer;
+        DataOutputStream out;
+        //outFromServer = clientSocket.getOutputStream();
+        //out = new DataOutputStream(outFromServer);
+
+        for (Map.Entry<String, SocketHandler> pair : listOfUsers.entrySet()) {
+            try {
+                outFromServer = pair.getValue().getClientSocket().getOutputStream();//.getClientSocket().getOutputStream();
+                out = new DataOutputStream(outFromServer);
+                out.writeUTF(pair.getKey()); //pair.getKey is the username
+                out.writeUTF(message);
+                out.close();
+            } catch (IOException ex) {
+                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    
+    public static void whisper() {
+        
+    }
     
 }
 //ip route get 8.8.8.8 | awk '{print $NF; exit}'

@@ -47,6 +47,9 @@ public class ClientConnecter extends Thread {
                 String userList = Server.getListOfUsers();
                 out.writeUTF(userList);
                 
+                in.close();
+                out.close();
+                
                  
             } catch (Exception e) {
                 System.err.println(e);
