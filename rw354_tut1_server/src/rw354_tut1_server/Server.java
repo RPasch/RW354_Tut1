@@ -13,7 +13,6 @@ import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static rw354_tut1_server.ClientConnecter.out;
 
 public class Server extends Thread{
     static OutputStream outFromServer;
@@ -74,23 +73,53 @@ public class Server extends Thread{
             String userList = getListOfUsers();
             out.writeUTF(userList);
             
-            System.out.println(in.readUTF());
-            System.out.println(in.readUTF());
-            System.out.println(in.readUTF());
-            System.out.println(in.readUTF());
-            System.out.println(in.readUTF());
-            System.out.println(in.readUTF());
-            System.out.println(in.readUTF());
-            System.out.println(in.readUTF());
-            System.out.println(in.readUTF());
-            
-            in.close();
-            out.close();
+            broadcast(in.readUTF());
+            broadcast(in.readUTF());
+            broadcast(in.readUTF());
+            broadcast(in.readUTF());
+            broadcast(in.readUTF());
+            broadcast(in.readUTF());
+            broadcast(in.readUTF());
+            broadcast(in.readUTF());
+            broadcast(in.readUTF());
+            broadcast(in.readUTF());
+            broadcast(in.readUTF());
+            broadcast(in.readUTF());
+            broadcast(in.readUTF());
+            broadcast(in.readUTF());
+            broadcast(in.readUTF());
+            broadcast(in.readUTF());
+            broadcast(in.readUTF());
+            broadcast(in.readUTF());
+            broadcast(in.readUTF());
+            broadcast(in.readUTF());
+            broadcast(in.readUTF());
+            broadcast(in.readUTF());
+            broadcast(in.readUTF());
+            broadcast(in.readUTF());
+            broadcast(in.readUTF());
+            broadcast(in.readUTF());
+            broadcast(in.readUTF());
+            broadcast(in.readUTF());
+//            System.out.println(in.readUTF());
+//            System.out.println(in.readUTF());
+//            System.out.println(in.readUTF());
+//            System.out.println(in.readUTF());
+//            System.out.println(in.readUTF());
+//            System.out.println(in.readUTF());
+//            System.out.println(in.readUTF());
+//            System.out.println(in.readUTF());
+//            System.out.println(in.readUTF());
+//            
+//            in.close();
+//            out.close();
         } catch (Exception e) {
             System.err.println("SERVER: "+ e);
         }
         
     }
+    
+    
     
     public static String getListOfUsers() {
         String userList = "";
@@ -109,14 +138,14 @@ public class Server extends Thread{
         DataOutputStream out;
         //outFromServer = clientSocket.getOutputStream();
         //out = new DataOutputStream(outFromServer);
-
+        System.out.println("kaka "+message+" kaka ");
         for (Map.Entry<String, SocketHandler> pair : listOfUsers.entrySet()) {
             try {
                 outFromServer = pair.getValue().getClientSocket().getOutputStream();//.getClientSocket().getOutputStream();
                 out = new DataOutputStream(outFromServer);
                 out.writeUTF(pair.getKey()); //pair.getKey is the username
                 out.writeUTF(message);
-                out.close();
+//                out.close();
             } catch (IOException ex) {
                 Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
             }
