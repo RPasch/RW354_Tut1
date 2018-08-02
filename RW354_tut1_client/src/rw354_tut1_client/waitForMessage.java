@@ -29,7 +29,7 @@ public class waitForMessage extends Thread {
         try {
             waitForMsg(chat);
         } catch (IOException ex) {
-            Logger.getLogger(waitForMessage.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Error in WaitForMessage : "+ ex);
         }
         
     }
@@ -41,19 +41,20 @@ public class waitForMessage extends Thread {
          while(true){
             
             String anything = RW354_tut1_client.receiveMsg();
-            if(anything.charAt(0) == '&'){
-                String connectedUsr = anything.substring(1, anything.length());
-                chat.addAllusers(connectedUsr);
-
-            }else if(anything.charAt(0)== '#'){
-                String disconnectedUsr = anything.substring(1,anything.length());
-                chat.printConnection(disconnectedUsr, false);
-            
-            }else{
-                
-                String who = anything;
-                String message = RW354_tut1_client.receiveMsg();
-                chat.printMsg(message, who);
+            switch (anything.charAt(0)) {
+                case '&':
+                    String connectedUsr = anything.substring(1, anything.length());
+                    chat.addAllusers(connectedUsr);
+                    break;
+                case '#':
+                    String disconnectedUsr = anything.substring(1,anything.length());
+                    chat.printConnection(disconnectedUsr, false);
+                    break;
+                default:
+                    String who = anything;
+                    String message = RW354_tut1_client.receiveMsg();
+                    chat.printMsg(message, who);
+                    break;
             }
             
         }

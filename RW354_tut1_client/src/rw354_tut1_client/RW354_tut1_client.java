@@ -13,7 +13,7 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-
+//146.232.49.154
 
 /**
  *
@@ -108,14 +108,11 @@ public class RW354_tut1_client {
     
     }
     public static String receiveMsg() throws IOException{
-       String received_msg = "sfv";
        System.out.println(client);
        inFromServer = client.getInputStream();
        in = new DataInputStream(inFromServer);
        String inputFromServer = in.readUTF();
-       received_msg = inputFromServer;
-       System.out.println(received_msg);
-       return received_msg;
+       return inputFromServer;
     }
     
  

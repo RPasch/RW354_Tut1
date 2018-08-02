@@ -95,7 +95,7 @@ public class ChatInterface extends javax.swing.JFrame {
             }
         });
 
-        IP_addr.setText("Enter IP address");
+        IP_addr.setText("146.232.49.154");
         IP_addr.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 IP_addrActionPerformed(evt);
@@ -234,6 +234,8 @@ public class ChatInterface extends javax.swing.JFrame {
     public void addAllusers(String list_of_users) {
         chat_choice_dropdown.removeAll();
         users_txt.setText("");
+        users_txt.append("All \n");
+        chat_choice_dropdown.add("All");
         List<String> list = Arrays.asList(list_of_users.split(","));
         printConnection(list.get(0), true);
         for (int i = 0; i < list.size(); i++) {
