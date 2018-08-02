@@ -43,8 +43,12 @@ public class waitForMessage extends Thread {
             String anything = RW354_tut1_client.receiveMsg();
             if(anything.charAt(0) == '&'){
                 String connectedUsr = anything.substring(1, anything.length());
-                chat.addUsr(connectedUsr);
+                chat.addAllusers(connectedUsr);
 
+            }else if(anything.charAt(0)== '#'){
+                String disconnectedUsr = anything.substring(1,anything.length());
+                chat.printConnection(disconnectedUsr, false);
+            
             }else{
                 
                 String who = anything;

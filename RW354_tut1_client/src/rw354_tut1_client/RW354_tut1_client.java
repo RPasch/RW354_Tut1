@@ -12,6 +12,7 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 
 /**
@@ -21,7 +22,7 @@ import java.util.logging.Logger;
 public class RW354_tut1_client {
     public boolean valid_connection = true;
     private static  int port = 8000;
-    static String serverName = "1";
+    static String serverName = "146.232.49.154";
     static OutputStream outToServer;
     static DataOutputStream out;
     static InputStream inFromServer;
@@ -30,6 +31,7 @@ public class RW354_tut1_client {
     public static boolean valid_usrnm = true;
     public static boolean valid_con = true;
     public static ChatInterface chat ;
+    public static String IP_ad;
     /**
      * @param args the command line arguments
      */
@@ -40,7 +42,7 @@ public class RW354_tut1_client {
             
         }
         else{*/
-        serverName = args[0];
+        //serverName = args[0];
        // }
        
         String message ;
@@ -54,8 +56,10 @@ public class RW354_tut1_client {
     public static void connect(String serverName, String usr) throws IOException {
         
        try {
-         System.out.println("Connecting to " + serverName + " on port " + port);
-         client = new Socket(serverName, port);
+         IP_ad = chat.IP;
+         System.out.println(IP_ad);
+         System.out.println("Connecting to " + IP_ad + " on port " + port);
+         client = new Socket(IP_ad, port);
          valid_usrnm = true;
          valid_usrnm = true;
          System.out.println("Just connected to " + client.getRemoteSocketAddress());
@@ -70,10 +74,13 @@ public class RW354_tut1_client {
          //String inputFromServer = in.readUTF(); // this is fucking up my shit
          //System.out.println("Server says " + in.readUTF());
       } catch (IOException e) {
+           JOptionPane.showMessageDialog(chat, "Invalid IP Address");
       }
         
     }
-
+    public static String getIPaddr(){
+        return IP_ad;
+    }
     public static String getServerName() {
         return serverName;
     }
@@ -87,7 +94,13 @@ public class RW354_tut1_client {
     
     public static void disconnect(){
         try {
+            out.writeUTF("@");
+            out.close();
+            outToServer.close();
+            in.close();
+            inFromServer.close();
             client.close();
+            JOptionPane.showMessageDialog(chat, "Disconnected from Server");
         } catch (IOException ex) {
             Logger.getLogger(RW354_tut1_client.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -96,12 +109,12 @@ public class RW354_tut1_client {
     }
     public static String receiveMsg() throws IOException{
        String received_msg = "sfv";
-        System.out.println(client);
+       System.out.println(client);
        inFromServer = client.getInputStream();
        in = new DataInputStream(inFromServer);
        String inputFromServer = in.readUTF();
        received_msg = inputFromServer;
-        System.out.println(received_msg);
+       System.out.println(received_msg);
        return received_msg;
     }
     

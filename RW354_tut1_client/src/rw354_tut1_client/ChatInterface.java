@@ -25,6 +25,7 @@ public class ChatInterface extends javax.swing.JFrame {
     String username;
     String msg;
     String serverName = RW354_tut1_client.getServerName();
+    String IP ;
     /**
      * Creates new form ChatInterface
      */
@@ -49,6 +50,7 @@ public class ChatInterface extends javax.swing.JFrame {
         connect_btn = new javax.swing.JButton();
         disconnect_btn = new javax.swing.JButton();
         msg_txt = new javax.swing.JTextField();
+        IP_addr = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -93,24 +95,35 @@ public class ChatInterface extends javax.swing.JFrame {
             }
         });
 
+        IP_addr.setText("Enter IP address");
+        IP_addr.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                IP_addrActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(Chat_txt, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(username_txt, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(32, 32, 32)
-                            .addComponent(connect_btn)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(msg_txt, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(Chat_txt, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(msg_txt, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(chat_choice_dropdown, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(username_txt, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(IP_addr, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(chat_choice_dropdown, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                        .addComponent(connect_btn)
+                        .addGap(54, 54, 54)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(users_txt, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(send_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -124,7 +137,8 @@ public class ChatInterface extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(username_txt, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(connect_btn)
-                    .addComponent(disconnect_btn))
+                    .addComponent(disconnect_btn)
+                    .addComponent(IP_addr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(44, 44, 44)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(Chat_txt, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -153,9 +167,9 @@ public class ChatInterface extends javax.swing.JFrame {
             RW354_tut1_client.sendMessage(msg, msg_choice);
             
             
-            printMsg(msg, msg_choice);
+            //printMsg(msg, msg_choice);
         } catch (IOException ex) {
-            Logger.getLogger(ChatInterface.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("SENDING ERROR" + ex);
         }
     }//GEN-LAST:event_send_btnActionPerformed
 
@@ -168,6 +182,7 @@ public class ChatInterface extends javax.swing.JFrame {
         try {
             // TODO add your handling code here:
             username_txtActionPerformed(evt);
+            IP_addrActionPerformed(evt);
             connect(serverName, username);
             if(!valid_usrnm){
                 JOptionPane.showMessageDialog(rootPane, "Nickname already chosen");
@@ -194,8 +209,22 @@ public class ChatInterface extends javax.swing.JFrame {
         RW354_tut1_client.disconnect();
         dispose();
     }//GEN-LAST:event_disconnect_btnActionPerformed
-    public void printMsg(String msg, String toWho){
+
+    private void IP_addrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IP_addrActionPerformed
+        // TODO add your handling code here:
+        IP = IP_addr.getText();
+        
+    }//GEN-LAST:event_IP_addrActionPerformed
+    public void printMsg(String msg, String toWho ){
         Chat_txt.append( toWho + ":" + msg +"\n");
+    }
+    public void printConnection(String toWho,boolean connectDis ){
+        if(connectDis){
+            Chat_txt.append( toWho + "is connected");
+        }else{
+            Chat_txt.append( toWho + "  disconected");
+        }
+        
     }
     public void addUsr(String usr){
         users_txt.append( usr + "\n");
@@ -203,10 +232,12 @@ public class ChatInterface extends javax.swing.JFrame {
         
     }
     public void addAllusers(String list_of_users) {
+        chat_choice_dropdown.removeAll();
+        users_txt.setText("");
         List<String> list = Arrays.asList(list_of_users.split(","));
+        printConnection(list.get(0), true);
         for (int i = 0; i < list.size(); i++) {
                         addUsr(list.get(i));
-
         }
     }
     /**
@@ -246,6 +277,7 @@ public class ChatInterface extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.awt.TextArea Chat_txt;
+    private javax.swing.JTextField IP_addr;
     private java.awt.Choice chat_choice_dropdown;
     private javax.swing.JButton connect_btn;
     private javax.swing.JButton disconnect_btn;
