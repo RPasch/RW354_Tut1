@@ -67,7 +67,7 @@ public class ChatInterface extends javax.swing.JFrame {
 
         chat_choice_dropdown.add("All");
 
-        username_txt.setText("Enter username");
+        username_txt.setText("BloodRabz");
         username_txt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 username_txtActionPerformed(evt);
@@ -88,7 +88,7 @@ public class ChatInterface extends javax.swing.JFrame {
             }
         });
 
-        msg_txt.setText("Enter message");
+        msg_txt.setText("Whatup");
         msg_txt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 msg_txtActionPerformed(evt);
