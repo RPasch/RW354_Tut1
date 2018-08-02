@@ -42,9 +42,9 @@ public class Server extends Thread{
             clientSocket = serverSocket.accept();
             sh = new SocketHandler(clientSocket);
             
-                //Thread t = new Thread(sh);
+                Thread t = new Thread(sh);
                 //add to the hashmap
-                //t.start();
+                t.start();
                 
             //System.out.println("new user connected");
                  

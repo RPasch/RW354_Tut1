@@ -29,9 +29,11 @@ public class ClientConnecter extends Thread {
             try {
                 clientSocket = serverSocket.accept();
                 SocketHandler sh = new SocketHandler(clientSocket);
-                //Thread t = new Thread(sh);
+                //sh.start();
+                Thread t = new Thread(sh);
                 //add to the hashmap
-                //t.start();
+                t.start();
+                
                 inFromClient = clientSocket.getInputStream();
                 in = new DataInputStream(inFromClient);
                 outFromServer = clientSocket.getOutputStream();
