@@ -36,26 +36,24 @@ public class waitForMessage extends Thread {
     
     
      public static void waitForMsg(ChatInterface chat) throws IOException{
-        String list_of_users = RW354_tut1_client.receiveMsg();
-        chat.addAllusers(list_of_users.substring(0, list_of_users.length()));
+         String uselesCode = RW354_tut1_client.receiveMsg();
+         String list_of_users = RW354_tut1_client.receiveMsg();
+        chat.addAllusers(list_of_users);
          while(true){
-            
+            String code = RW354_tut1_client.receiveMsg();
             String anything = RW354_tut1_client.receiveMsg();
-            switch (anything.charAt(0)) {
-                case '&':
+            switch (code) {
+                case "&":
                     System.out.println(list_of_users+ "\n");
-                    String connectedUsr = anything.substring(1, anything.length());
-                    System.out.println(connectedUsr);
-                    chat.addAllusers(connectedUsr);
+                    System.out.println(anything);
+                    chat.addAllusers(anything);
                     break;
-                case '#':
-                    String disconnectedUsr = anything.substring(1,anything.length());
-                    String whoDiscon = RW354_tut1_client.receiveMsg();
-                    chat.printConnection(whoDiscon, false);
+                case "#":
+                    chat.printConnection(anything, false);
                     break;
                 default:
-                    String who = anything;
-                    String message = RW354_tut1_client.receiveMsg();
+                    String who = code;
+                    String message = anything;
                     chat.printMsg(message, who);
                     break;
             }
