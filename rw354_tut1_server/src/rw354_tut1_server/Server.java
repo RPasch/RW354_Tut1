@@ -85,44 +85,6 @@ public class Server extends Thread{
             String userList = getListOfUsers();
             out.writeUTF(userList);
             
-//            broadcast(in.readUTF());
-//            broadcast(in.readUTF());
-//            broadcast(in.readUTF());
-//            broadcast(in.readUTF());
-//            broadcast(in.readUTF());
-//            broadcast(in.readUTF());
-//            broadcast(in.readUTF());
-//            broadcast(in.readUTF());
-//            broadcast(in.readUTF());
-//            broadcast(in.readUTF());
-//            broadcast(in.readUTF());
-//            broadcast(in.readUTF());
-//            broadcast(in.readUTF());
-//            broadcast(in.readUTF());
-//            broadcast(in.readUTF());
-//            broadcast(in.readUTF());
-//            broadcast(in.readUTF());
-//            broadcast(in.readUTF());
-//            broadcast(in.readUTF());
-//            broadcast(in.readUTF());
-//            broadcast(in.readUTF());
-//            broadcast(in.readUTF());
-//            broadcast(in.readUTF());
-//            broadcast(in.readUTF());
-//            broadcast(in.readUTF());
-//            broadcast(in.readUTF());
-//            broadcast(in.readUTF());
-//            broadcast(in.readUTF());
-//            System.out.println(in.readUTF());
-//            System.out.println(in.readUTF());
-//            System.out.println(in.readUTF());
-//            System.out.println(in.readUTF());
-//            System.out.println(in.readUTF());
-//            System.out.println(in.readUTF());
-//            System.out.println(in.readUTF());
-//            System.out.println(in.readUTF());
-//            System.out.println(in.readUTF());
-//            
 //            in.close();
 //            out.close();
         } catch (Exception e) {
@@ -180,8 +142,22 @@ public class Server extends Thread{
         }
     }
     
-    public static void whisper() {
+    public static void whisper(String usernameFrom, String usernameTo, String message) {
+        OutputStream outFromServer;
+        DataOutputStream out;
         
+        for (Map.Entry<String, SocketHandler> pair : listOfUsers.entrySet()) {
+            if (pair.getKey().equals(usernameTo) || pair.getKey().equals(usernameFrom)) {
+                try {
+                    outFromServer = pair.getValue().getClientSocket().getOutputStream();//.getClientSocket().getOutputStream();
+                    out = new DataOutputStream(outFromServer);
+                    out.writeUTF(usernameFrom+" > "+usernameTo); 
+                    out.writeUTF(message);
+                } catch (Exception e) {
+                    System.err.println("could not whisper : " + e);
+                }
+            }
+        }
     }
     
 }

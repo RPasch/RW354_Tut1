@@ -35,10 +35,20 @@ public class SocketHandler implements Runnable {
         
         while(true){
             try {
+                String toUser = in.readUTF();
                 String message = in.readUTF();
-                System.out.println("deez nuts");
-                Server.broadcast(username, message);
-                System.out.println("her nutz");
+                //System.out.println("deez nuts");
+                if (toUser.equals("All")) {
+                    Server.broadcast(username, message);
+                } else if (toUser.equals("@")) {
+                    Server.broadcast("#", username);
+                    in.close();
+                    inFromClient.close();
+                    clientSocket.close();
+                } else {
+                    Server.whisper(username, toUser, message);
+                }
+                //System.out.println("her nutz");
             } catch (IOException ex) {
                 System.err.println(ex);
                 //bc that user disconnected
