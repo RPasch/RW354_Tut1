@@ -26,6 +26,7 @@ public class ChatInterface extends javax.swing.JFrame {
     String msg;
     String serverName = RW354_tut1_client.getServerName();
     String IP ;
+    List<String> list = null; 
     /**
      * Creates new form ChatInterface
      */
@@ -234,12 +235,26 @@ public class ChatInterface extends javax.swing.JFrame {
         
     }
     public void addAllusers(String list_of_users) {
+        String newUsr= "";
         chat_choice_dropdown.removeAll();
         users_txt.setText("");
         users_txt.append("All \n");
         chat_choice_dropdown.add("All");
-        List<String> list = Arrays.asList(list_of_users.split(","));
-        printConnection(list.get(0), true);
+        List<String> tempList = Arrays.asList(list_of_users.split(","));
+         if (list == null){
+             list = tempList;
+             newUsr = list.get(0);
+         }else{
+             System.out.println(list + " list \n " + tempList + " tmep list");
+             for(String s : tempList){
+                 if(!list.contains(s)){
+                     newUsr = s;
+                     System.out.println(newUsr+ " this is new user");
+                 }
+             }
+             list = tempList;
+         }
+        printConnection(newUsr, true);
         for (int i = 0; i < list.size(); i++) {
                         addUsr(list.get(i));
         }

@@ -72,7 +72,7 @@ public class RW354_tut1_client {
 //
 //                System.err.println("Timeout reached!!! " + exx);
 //         }
-         
+
          valid_usrnm = true;
          valid_usrnm = true;
          System.out.println("Just connected to " + client.getRemoteSocketAddress());

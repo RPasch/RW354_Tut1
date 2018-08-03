@@ -37,7 +37,7 @@ public class waitForMessage extends Thread {
     
      public static void waitForMsg(ChatInterface chat) throws IOException{
         String list_of_users = RW354_tut1_client.receiveMsg();
-        chat.addAllusers(list_of_users.substring(1, list_of_users.length()));
+        chat.addAllusers(list_of_users.substring(0, list_of_users.length()));
          while(true){
             
             String anything = RW354_tut1_client.receiveMsg();
