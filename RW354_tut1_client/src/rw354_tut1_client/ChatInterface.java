@@ -243,7 +243,7 @@ public class ChatInterface extends javax.swing.JFrame {
         List<String> tempList = Arrays.asList(list_of_users.split(","));
          if (list == null){
              list = tempList;
-             newUsr = list.get(0);
+             newUsr = username;
          }else{
              System.out.println(list + " list \n " + tempList + " tmep list");
              for(String s : tempList){
