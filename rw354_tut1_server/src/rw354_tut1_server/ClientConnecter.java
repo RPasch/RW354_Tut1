@@ -35,6 +35,8 @@ public class ClientConnecter extends Thread {
                 outFromServer = clientSocket.getOutputStream();
                 out = new DataOutputStream(outFromServer);
                 
+                out.writeUTF(Server.getListOfUsers());
+                
                 String username = in.readUTF();
                 
                 SocketHandler sh = new SocketHandler(username, clientSocket);
