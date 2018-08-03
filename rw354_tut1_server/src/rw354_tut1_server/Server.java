@@ -40,11 +40,23 @@ public class Server extends Thread{
         SocketHandler sh = null;    
         try {
             clientSocket = serverSocket.accept();
-            sh = new SocketHandler(clientSocket);
             
-                Thread t = new Thread(sh);
+            inFromClient = clientSocket.getInputStream();
+            in = new DataInputStream(inFromClient);
+            
+            String username = in.readUTF();
+            System.out.println("Welcome: "+username+"to the chat");
+            
+            sh = new SocketHandler(username, clientSocket);
+            
+            Thread t = new Thread(sh);
                 //add to the hashmap
-                t.start();
+            t.start();
+                
+            listOfUsers.put(username, sh);
+            
+            String userList = getListOfUsers();
+            out.writeUTF(userList);
                 
             //System.out.println("new user connected");
                  
@@ -59,48 +71,48 @@ public class Server extends Thread{
         try {
             
             
-            inFromClient = clientSocket.getInputStream();
+            //inFromClient = clientSocket.getInputStream();
             outFromServer = clientSocket.getOutputStream();
             
-            in = new DataInputStream(inFromClient);
+            //in = new DataInputStream(inFromClient);
             out = new DataOutputStream(outFromServer);
             
-            String username = in.readUTF();
-            System.out.println("Welcome: "+username+"to the chat");
+            //String username = in.readUTF();
+            //System.out.println("Welcome: "+username+"to the chat");
             
-            listOfUsers.put(username, sh);
+            //listOfUsers.put(username, sh);
             
             String userList = getListOfUsers();
             out.writeUTF(userList);
             
-            broadcast(in.readUTF());
-            broadcast(in.readUTF());
-            broadcast(in.readUTF());
-            broadcast(in.readUTF());
-            broadcast(in.readUTF());
-            broadcast(in.readUTF());
-            broadcast(in.readUTF());
-            broadcast(in.readUTF());
-            broadcast(in.readUTF());
-            broadcast(in.readUTF());
-            broadcast(in.readUTF());
-            broadcast(in.readUTF());
-            broadcast(in.readUTF());
-            broadcast(in.readUTF());
-            broadcast(in.readUTF());
-            broadcast(in.readUTF());
-            broadcast(in.readUTF());
-            broadcast(in.readUTF());
-            broadcast(in.readUTF());
-            broadcast(in.readUTF());
-            broadcast(in.readUTF());
-            broadcast(in.readUTF());
-            broadcast(in.readUTF());
-            broadcast(in.readUTF());
-            broadcast(in.readUTF());
-            broadcast(in.readUTF());
-            broadcast(in.readUTF());
-            broadcast(in.readUTF());
+//            broadcast(in.readUTF());
+//            broadcast(in.readUTF());
+//            broadcast(in.readUTF());
+//            broadcast(in.readUTF());
+//            broadcast(in.readUTF());
+//            broadcast(in.readUTF());
+//            broadcast(in.readUTF());
+//            broadcast(in.readUTF());
+//            broadcast(in.readUTF());
+//            broadcast(in.readUTF());
+//            broadcast(in.readUTF());
+//            broadcast(in.readUTF());
+//            broadcast(in.readUTF());
+//            broadcast(in.readUTF());
+//            broadcast(in.readUTF());
+//            broadcast(in.readUTF());
+//            broadcast(in.readUTF());
+//            broadcast(in.readUTF());
+//            broadcast(in.readUTF());
+//            broadcast(in.readUTF());
+//            broadcast(in.readUTF());
+//            broadcast(in.readUTF());
+//            broadcast(in.readUTF());
+//            broadcast(in.readUTF());
+//            broadcast(in.readUTF());
+//            broadcast(in.readUTF());
+//            broadcast(in.readUTF());
+//            broadcast(in.readUTF());
 //            System.out.println(in.readUTF());
 //            System.out.println(in.readUTF());
 //            System.out.println(in.readUTF());
@@ -133,7 +145,7 @@ public class Server extends Thread{
         return userList;
     }
     
-    public static void broadcast(String message) {
+    public static void broadcast(String username, String message) {
         OutputStream outFromServer;
         DataOutputStream out;
         //outFromServer = clientSocket.getOutputStream();
@@ -143,7 +155,7 @@ public class Server extends Thread{
             try {
                 outFromServer = pair.getValue().getClientSocket().getOutputStream();//.getClientSocket().getOutputStream();
                 out = new DataOutputStream(outFromServer);
-                out.writeUTF(pair.getKey()); //pair.getKey is the username
+                out.writeUTF(username); //pair.getKey is the username
                 out.writeUTF(message);
 //                out.close();
             } catch (IOException ex) {

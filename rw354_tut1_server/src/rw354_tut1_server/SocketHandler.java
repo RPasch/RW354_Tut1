@@ -1,16 +1,21 @@
 package rw354_tut1_server;
 
 import java.io.DataInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class SocketHandler implements Runnable {
 
+    private String username;
     private Socket clientSocket;
-    static InputStream inFromClient;
-    static DataInputStream in;
+    InputStream inFromClient;
+    DataInputStream in;
     
-    public SocketHandler(Socket clientSocket) {
+    public SocketHandler(String username, Socket clientSocket) {
+        this.username = username;
         this.clientSocket = clientSocket;
     }
     
@@ -18,21 +23,49 @@ public class SocketHandler implements Runnable {
 
     @Override
     public void run() {
+        System.out.println("yup this client has a thread");
+        Server.broadcast(username, "I shat mah pants");
+        
         try {
             inFromClient = clientSocket.getInputStream(); 
             in = new DataInputStream(inFromClient);
-            String message = in.readUTF();
-            Server.broadcast(message);
         } catch (Exception e) {
-            
+            System.out.println("could not open stream for this client "+e);
         }
         
-        Listener listener = new Listener(clientSocket);
-        listener.start();
+        while(true){
+            try {
+                String message = in.readUTF();
+                System.out.println("deez nuts");
+                Server.broadcast(username, message);
+                System.out.println("her nutz");
+            } catch (IOException ex) {
+                System.err.println(ex);
+                //bc that user disconnected
+                try {
+                    clientSocket.close();
+                } catch (Exception e) {
+                    System.err.println("could not disconnect ");
+                }
+                break;
+            }
+        }
+
     }
     
     public Socket getClientSocket(){
         return clientSocket;
     }
     
+    //        try {
+    //            inFromClient = clientSocket.getInputStream(); 
+    //            in = new DataInputStream(inFromClient);
+    //            String message = in.readUTF();
+    //            Server.broadcast(message);
+    //        } catch (Exception e) {
+    //            
+    //        }
+    //        
+    //        Listener listener = new Listener(clientSocket);
+    //        listener.start();
 }

@@ -13,10 +13,10 @@ public class ClientConnecter extends Thread {
     
     ServerSocket serverSocket = null;
     Socket clientSocket = null;
-    static OutputStream outFromServer;
-    static DataOutputStream out;
-    static InputStream inFromClient;
-    static DataInputStream in;
+    OutputStream outFromServer;
+    DataOutputStream out;
+    InputStream inFromClient;
+    DataInputStream in;
     
     public ClientConnecter (ServerSocket serverSocket, Socket clientSocket) {
         this.serverSocket = serverSocket;
@@ -28,11 +28,7 @@ public class ClientConnecter extends Thread {
         while(true){
             try {
                 clientSocket = serverSocket.accept();
-                SocketHandler sh = new SocketHandler(clientSocket);
-                //sh.start();
-                Thread t = new Thread(sh);
-                //add to the hashmap
-                t.start();
+                
                 
                 inFromClient = clientSocket.getInputStream();
                 in = new DataInputStream(inFromClient);
@@ -40,6 +36,12 @@ public class ClientConnecter extends Thread {
                 out = new DataOutputStream(outFromServer);
                 
                 String username = in.readUTF();
+                
+                SocketHandler sh = new SocketHandler(username, clientSocket);
+                //sh.start();
+                Thread t = new Thread(sh);
+                //add to the hashmap
+                t.start();
                 
                 Server.listOfUsers.put(username, sh);
                 System.out.println(Server.listOfUsers);
