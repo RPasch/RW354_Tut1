@@ -56,7 +56,9 @@ public class Server extends Thread{
             listOfUsers.put(username, sh);
             
             String userList = getListOfUsers();
+            out.writeUTF("&");
             out.writeUTF(userList);
+//            sendUserList(userList);
                 
             //System.out.println("new user connected");
                  
@@ -83,7 +85,7 @@ public class Server extends Thread{
             //listOfUsers.put(username, sh);
             
             String userList = getListOfUsers();
-            out.writeUTF(userList);
+            out.writeUTF("&"+userList);
             
 //            in.close();
 //            out.close();
@@ -115,7 +117,10 @@ public class Server extends Thread{
             try {
                 outFromServer = pair.getValue().getClientSocket().getOutputStream();//.getClientSocket().getOutputStream();
                 out = new DataOutputStream(outFromServer);
-                out.writeUTF("&"+userList); //pair.getKey is the username
+                
+                //out.writeUTF("&");
+                out.writeUTF("&"+userList); 
+                
 //                out.close();
             } catch (IOException ex) {
                 Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
