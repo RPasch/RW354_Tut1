@@ -41,10 +41,17 @@ public class SocketHandler implements Runnable {
                 if (toUser.equals("All")) {
                     Server.broadcast(username, message);
                 } else if (toUser.equals("@")) {
-                    Server.broadcast("#", username);
+                    
+                    Server.listOfUsers.remove(message);
+                    if (!Server.listOfUsers.isEmpty()) {
+                        Server.broadcast("#", message); //who disconnected
+                        Server.sendUserList(Server.getListOfUsers());
+                    } else {
+                        System.out.println("this is an empty hashmap "+Server.listOfUsers);
+                    }
                     in.close();
                     inFromClient.close();
-                    clientSocket.close();
+                    //clientSocket.close();
                 } else {
                     Server.whisper(username, toUser, message);
                 }
@@ -55,7 +62,7 @@ public class SocketHandler implements Runnable {
                 try {
                     clientSocket.close();
                 } catch (Exception e) {
-                    System.err.println("could not disconnect ");
+                    System.err.println("could not disconnect " + e);
                 }
                 break;
             }

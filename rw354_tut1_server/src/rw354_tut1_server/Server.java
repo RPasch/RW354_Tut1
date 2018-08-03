@@ -104,19 +104,23 @@ public class Server extends Thread{
     public static String getListOfUsers() {
         String userList = "";
         
-        for (String key : listOfUsers.keySet()) {
-            userList = userList + key + ",";
+        if(!listOfUsers.isEmpty()){
+            for (String key : listOfUsers.keySet()) {
+                userList = userList + key + ",";
+            }
         }
                 //System.out.println("IM IN HERE "+listOfUsers.keySet());
 
-        userList = userList.substring(0, userList.length() - 1);
+        if (userList != ""){
+            userList = userList.substring(0, userList.length() - 1);        
+        }
         
         return userList;
     }
     
     public static void sendUserList(String userList){
-        OutputStream outFromServer;
-        DataOutputStream out;
+        OutputStream outFromServer = null;
+        DataOutputStream out = null;
         
         for (Map.Entry<String, SocketHandler> pair : listOfUsers.entrySet()) {
             try {
@@ -127,15 +131,22 @@ public class Server extends Thread{
                 out.writeUTF("&"+userList); 
                 
 //                out.close();
-            } catch (IOException ex) {
-                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception e) {
+                System.err.println("problem in sendUserList "+e);
             }
         }
+        
+//        try {
+//            out.close();
+//            outFromServer.close();
+//        } catch (Exception e) {
+//            System.err.println("could not close whisper "+e);
+//        }
     }
     
     public static void broadcast(String username, String message) {
-        OutputStream outFromServer;
-        DataOutputStream out;
+        OutputStream outFromServer = null;
+        DataOutputStream out = null;
         //outFromServer = clientSocket.getOutputStream();
         //out = new DataOutputStream(outFromServer);
         //System.out.println("kaka "+message+" kaka ");
@@ -146,15 +157,23 @@ public class Server extends Thread{
                 out.writeUTF(username); //pair.getKey is the username
                 out.writeUTF(message);
 //                out.close();
-            } catch (IOException ex) {
-                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception e) {
+                System.err.println("problem in broadcast "+e);
             }
         }
+        
+//        try {
+//            out.close();
+//            outFromServer.close();
+//        } catch (Exception e) {
+//            System.err.println("could not close whisper "+e);
+//        }
+        
     }
     
     public static void whisper(String usernameFrom, String usernameTo, String message) {
-        OutputStream outFromServer;
-        DataOutputStream out;
+        OutputStream outFromServer = null;
+        DataOutputStream out = null;
         
         for (Map.Entry<String, SocketHandler> pair : listOfUsers.entrySet()) {
             if (pair.getKey().equals(usernameTo) || pair.getKey().equals(usernameFrom)) {
@@ -168,6 +187,13 @@ public class Server extends Thread{
                 }
             }
         }
+        
+//        try {
+//            out.close();
+//            outFromServer.close();
+//        } catch (Exception e) {
+//            System.err.println("could not close whisper "+e);
+//        }
     }
     
 }
