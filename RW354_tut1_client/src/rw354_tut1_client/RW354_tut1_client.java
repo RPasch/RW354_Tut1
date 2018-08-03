@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.net.SocketTimeoutException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -59,7 +60,19 @@ public class RW354_tut1_client {
          IP_ad = chat.IP;
          System.out.println(IP_ad);
          System.out.println("Connecting to " + IP_ad + " on port " + port);
-         client = new Socket(IP_ad, port);
+                      client = new Socket(IP_ad, port);
+
+//         try{
+//         
+//            client.setSoTimeout(1000);
+//         } catch(SocketTimeoutException exx) {
+//                // timeout exception.
+//                client.close();
+//                chat.dispose();
+//
+//                System.err.println("Timeout reached!!! " + exx);
+//         }
+         
          valid_usrnm = true;
          valid_usrnm = true;
          System.out.println("Just connected to " + client.getRemoteSocketAddress());
@@ -74,7 +87,7 @@ public class RW354_tut1_client {
          //String inputFromServer = in.readUTF(); // this is fucking up my shit
          //System.out.println("Server says " + in.readUTF());
       } catch (IOException e) {
-           JOptionPane.showMessageDialog(chat, "Invalid IP Address");
+           JOptionPane.showMessageDialog(chat, "Could not connect to server : " + e);
       }
         
     }
@@ -92,8 +105,9 @@ public class RW354_tut1_client {
         
     }
     
-    public static void disconnect(){
+    public static void disconnect(String usr){
         try {
+            out.writeUTF(usr);
             out.writeUTF("@");
             out.close();
             outToServer.close();

@@ -95,7 +95,7 @@ public class ChatInterface extends javax.swing.JFrame {
             }
         });
 
-        IP_addr.setText("146.232.49.154");
+        IP_addr.setText("146.232.50.101");
         IP_addr.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 IP_addrActionPerformed(evt);
@@ -194,6 +194,8 @@ public class ChatInterface extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(rootPane, "Connection Failed");
             }
         } catch (IOException ex) {
+          JOptionPane.showMessageDialog(rootPane, "Server not responding : " + ex);
+
             Logger.getLogger(ChatInterface.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_connect_btnActionPerformed
@@ -206,7 +208,7 @@ public class ChatInterface extends javax.swing.JFrame {
 
     private void disconnect_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_disconnect_btnActionPerformed
         // TODO add your handling code here:
-        RW354_tut1_client.disconnect();
+        RW354_tut1_client.disconnect(username);
         dispose();
     }//GEN-LAST:event_disconnect_btnActionPerformed
 
@@ -220,9 +222,9 @@ public class ChatInterface extends javax.swing.JFrame {
     }
     public void printConnection(String toWho,boolean connectDis ){
         if(connectDis){
-            Chat_txt.append( toWho + "is connected");
+            Chat_txt.append( toWho + " is connected \n");
         }else{
-            Chat_txt.append( toWho + "  disconected");
+            Chat_txt.append( toWho + "  disconected\n");
         }
         
     }
