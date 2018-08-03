@@ -29,12 +29,15 @@ public class ClientConnecter extends Thread {
             try {
                 clientSocket = serverSocket.accept();
                 
-                
                 inFromClient = clientSocket.getInputStream();
                 in = new DataInputStream(inFromClient);
                 outFromServer = clientSocket.getOutputStream();
                 out = new DataOutputStream(outFromServer);
+
+                System.out.println("HHH "+ Server.getListOfUsers());
                 
+                out.writeUTF(Server.getListOfUsers());
+
                 String username = in.readUTF();
                 
                 SocketHandler sh = new SocketHandler(username, clientSocket);
@@ -57,7 +60,7 @@ public class ClientConnecter extends Thread {
 //                
                  
             } catch (Exception e) {
-                System.err.println(e);
+                System.err.println("SERVER2 "+e);
             }
             
             

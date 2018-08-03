@@ -43,6 +43,10 @@ public class Server extends Thread{
             
             inFromClient = clientSocket.getInputStream();
             in = new DataInputStream(inFromClient);
+            outFromServer = clientSocket.getOutputStream();
+            out = new DataOutputStream(outFromServer);
+            
+            out.writeUTF("");
             
             String username = in.readUTF();
             System.out.println("Welcome: "+username+"to the chat");
@@ -55,9 +59,9 @@ public class Server extends Thread{
                 
             listOfUsers.put(username, sh);
             
-            String userList = getListOfUsers();
-            out.writeUTF("&");
-            out.writeUTF(userList);
+//            String userList = getListOfUsers();
+//            out.writeUTF("&");
+//            out.writeUTF(userList);
 //            sendUserList(userList);
                 
             //System.out.println("new user connected");
@@ -103,7 +107,8 @@ public class Server extends Thread{
         for (String key : listOfUsers.keySet()) {
             userList = userList + key + ",";
         }
-        
+                //System.out.println("IM IN HERE "+listOfUsers.keySet());
+
         userList = userList.substring(0, userList.length() - 1);
         
         return userList;
