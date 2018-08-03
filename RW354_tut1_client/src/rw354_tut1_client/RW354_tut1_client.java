@@ -11,6 +11,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -55,13 +57,18 @@ public class RW354_tut1_client {
         
     }
     public static void connect(String serverName, String usr) throws IOException {
-        
+        boolean validIP = false;
        try {
          IP_ad = chat.IP;
          System.out.println(IP_ad);
          System.out.println("Connecting to " + IP_ad + " on port " + port);
-                      client = new Socket(IP_ad, port);
-
+         client = new Socket(IP_ad, port);
+                      
+           validIP = client.isConnected();
+           if(!validIP){
+               JOptionPane.showMessageDialog(chat, "invalid IP");
+               return;
+           }
 //         try{
 //         
 //            client.setSoTimeout(1000);
@@ -73,12 +80,19 @@ public class RW354_tut1_client {
 //                System.err.println("Timeout reached!!! " + exx);
 //         }
 
-         valid_usrnm = true;
-         valid_usrnm = true;
+//         valid_usrnm = true;
+//         valid_usrnm = true;
+
+         String userList_intial = receiveMsg();
+         
+         boolean validUsrn = checkUsername(userList_intial,chat.username);
+         if(!validUsrn){
+             JOptionPane.showMessageDialog(chat, "Username taken , new username : "+chat.username);
+         }
          System.out.println("Just connected to " + client.getRemoteSocketAddress());
          outToServer = client.getOutputStream();
          out = new DataOutputStream(outToServer);
-         out.writeUTF(usr);
+         out.writeUTF(chat.username);
          waitForMessage waitFor = new waitForMessage(chat);
 
          waitFor.start();
@@ -129,7 +143,20 @@ public class RW354_tut1_client {
        return inputFromServer;
     }
     
- 
+   public static boolean checkUsername(String list,String usrnm){
+       boolean valid = true;
+       List<String> tempList = Arrays.asList(list.split(","));
+        if(tempList.contains(usrnm)){
+            valid = false;
+            double randomInt = (Math.random());
+            chat.username = chat.username + (int) (randomInt*100);
+        }
+        
+       
+       
+       
+       return valid;
+ }
    
     
     }

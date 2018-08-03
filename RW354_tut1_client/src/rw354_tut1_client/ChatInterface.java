@@ -182,8 +182,15 @@ public class ChatInterface extends javax.swing.JFrame {
     private void connect_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connect_btnActionPerformed
         try {
             // TODO add your handling code here:
+            boolean validIP = false;
             username_txtActionPerformed(evt);
             IP_addrActionPerformed(evt);
+//validIP = checkIP(IP);
+//            if(!validIP){
+//                
+//                JOptionPane.showMessageDialog(rootPane, "invalid IP");
+////                return;
+//            }
             connect(serverName, username);
             if(!valid_usrnm){
                 JOptionPane.showMessageDialog(rootPane, "Nickname already chosen");
@@ -258,6 +265,44 @@ public class ChatInterface extends javax.swing.JFrame {
         for (int i = 0; i < list.size(); i++) {
                         addUsr(list.get(i));
         }
+    }
+    public static boolean checkIP(String ip){
+        boolean valid = false;
+//        if(ip.substring(0, 8).equals("146.232.")){
+//            String ip_sub = ip.substring(8,10);
+//            int ip_sub_int = Integer.parseInt(ip_sub);
+//            if(ip.charAt(10) == '.'){
+//                if(ip_sub_int > 10 && ip_sub_int<99 ){
+//                   int ip_sub_int_two = Integer.parseInt(ip.substring(11,14));
+//                    System.out.println(ip.substring(11,14));
+//                   if(ip_sub_int_two>=100 && ip_sub_int_two<=255){
+//                       valid = true;
+//                   }
+//                }
+//            }
+//        }
+
+        Scanner sc = new Scanner(ip);
+        sc.useDelimiter("\\.");
+        String part1 = sc.next();//Integer.parseInt(sc.next());
+        String  part2 = sc.next();
+        String  part3 = sc.next();
+        String  part4 = sc.next();
+        sc.close();
+        System.out.println("part3 : " + ip );
+        int part3_i = Integer.parseInt(part3);
+        int part4_i = Integer.parseInt(part4);
+        if(part1.equals("146")){
+            if(part2.equals("232")){
+                if(part3_i >=10 && part3_i<=99){
+                    if(part4_i >= 100 && part4_i<=255){
+                        valid = true;
+                    }
+                }
+            }
+        }
+            
+        return valid;
     }
     /**
      * @param args the command line arguments
