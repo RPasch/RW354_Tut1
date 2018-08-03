@@ -50,9 +50,11 @@ public class waitForMessage extends Thread {
                     chat.addAllusers(connectedUsr);
                     break;
                 case '#':
-                    String disconnectedUsr = anything.substring(1,anything.length());
-                    String whoDiscon = RW354_tut1_client.receiveMsg();
-                    chat.printConnection(whoDiscon, false);
+                    
+                    String disconnectedUsr = RW354_tut1_client.receiveMsg();
+                    String list_of = RW354_tut1_client.receiveMsg().substring(1);
+                    chat.removeUsers(disconnectedUsr,list_of);
+//   chat.printConnection(whoDiscon, false);
                     break;
                 default:
                     String who = anything;

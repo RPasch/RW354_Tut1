@@ -234,7 +234,7 @@ public class ChatInterface extends javax.swing.JFrame {
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
-        //RW354_tut1_client.disconnect(username);
+        RW354_tut1_client.disconnect(username);
        
         dispose();
     }//GEN-LAST:event_formWindowClosing
@@ -254,6 +254,20 @@ public class ChatInterface extends javax.swing.JFrame {
         chat_choice_dropdown.add(usr);
         
     }
+    
+    public void removeUsers(String user,String list_of_users){
+        List<String> tempList = Arrays.asList(list_of_users.split(","));
+        list = tempList;
+        printConnection(user, false);
+        chat_choice_dropdown.removeAll();
+        users_txt.setText("");
+        users_txt.append("All \n");
+        chat_choice_dropdown.add("All \n");
+        for (int i = 0; i < list.size(); i++) {
+                        addUsr(list.get(i));
+        }
+    }
+    
     public void addAllusers(String list_of_users) {
         String newUsr= "";
         chat_choice_dropdown.removeAll();
