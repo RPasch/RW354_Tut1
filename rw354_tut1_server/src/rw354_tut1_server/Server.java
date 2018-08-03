@@ -145,12 +145,28 @@ public class Server extends Thread{
         return userList;
     }
     
+    public static void sendUserList(String userList){
+        OutputStream outFromServer;
+        DataOutputStream out;
+        
+        for (Map.Entry<String, SocketHandler> pair : listOfUsers.entrySet()) {
+            try {
+                outFromServer = pair.getValue().getClientSocket().getOutputStream();//.getClientSocket().getOutputStream();
+                out = new DataOutputStream(outFromServer);
+                out.writeUTF("&"+userList); //pair.getKey is the username
+//                out.close();
+            } catch (IOException ex) {
+                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    
     public static void broadcast(String username, String message) {
         OutputStream outFromServer;
         DataOutputStream out;
         //outFromServer = clientSocket.getOutputStream();
         //out = new DataOutputStream(outFromServer);
-        System.out.println("kaka "+message+" kaka ");
+        //System.out.println("kaka "+message+" kaka ");
         for (Map.Entry<String, SocketHandler> pair : listOfUsers.entrySet()) {
             try {
                 outFromServer = pair.getValue().getClientSocket().getOutputStream();//.getClientSocket().getOutputStream();

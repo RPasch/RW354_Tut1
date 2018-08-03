@@ -49,7 +49,8 @@ public class ClientConnecter extends Thread {
                 System.out.println("Welcome: "+username+"to the chat");
                 
                 String userList = Server.getListOfUsers();
-                out.writeUTF(userList);
+                Server.sendUserList(userList);
+                //out.writeUTF(userList);
 //                
 //                in.close();
 //                out.close();

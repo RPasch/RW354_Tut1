@@ -24,7 +24,7 @@ public class SocketHandler implements Runnable {
     @Override
     public void run() {
         System.out.println("yup this client has a thread");
-        Server.broadcast(username, "I shat mah pants");
+        //Server.broadcast(username, "I shat mah pants");
         
         try {
             inFromClient = clientSocket.getInputStream(); 
