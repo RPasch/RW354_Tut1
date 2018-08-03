@@ -107,8 +107,8 @@ public class RW354_tut1_client {
     
     public static void disconnect(String usr){
         try {
-            out.writeUTF(usr);
             out.writeUTF("@");
+            out.writeUTF(usr);
             out.close();
             outToServer.close();
             in.close();

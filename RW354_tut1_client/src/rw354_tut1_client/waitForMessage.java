@@ -50,7 +50,8 @@ public class waitForMessage extends Thread {
                     break;
                 case '#':
                     String disconnectedUsr = anything.substring(1,anything.length());
-                    chat.printConnection(disconnectedUsr, false);
+                    String whoDiscon = RW354_tut1_client.receiveMsg();
+                    chat.printConnection(whoDiscon, false);
                     break;
                 default:
                     String who = anything;

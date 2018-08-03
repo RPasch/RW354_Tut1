@@ -217,8 +217,8 @@ public class ChatInterface extends javax.swing.JFrame {
         IP = IP_addr.getText();
         
     }//GEN-LAST:event_IP_addrActionPerformed
-    public void printMsg(String msg, String toWho ){
-        Chat_txt.append( toWho + ":" + msg +"\n");
+    public void printMsg(String msg, String FromWho ){
+        Chat_txt.append( FromWho + ":" + msg +"\n");
     }
     public void printConnection(String toWho,boolean connectDis ){
         if(connectDis){
