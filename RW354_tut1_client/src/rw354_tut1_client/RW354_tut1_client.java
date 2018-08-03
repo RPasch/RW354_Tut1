@@ -60,8 +60,6 @@ public class RW354_tut1_client {
         boolean validIP = false;
        try {
          IP_ad = chat.IP;
-         System.out.println(IP_ad);
-         System.out.println("Connecting to " + IP_ad + " on port " + port);
          client = new Socket(IP_ad, port);
                       
            validIP = client.isConnected();
@@ -84,7 +82,7 @@ public class RW354_tut1_client {
 //         valid_usrnm = true;
 
          String userList_intial = receiveMsg();
-         
+           System.out.println(userList_intial+ " the intitial list sent");
          boolean validUsrn = checkUsername(userList_intial,chat.username);
          if(!validUsrn){
              JOptionPane.showMessageDialog(chat, "Username taken , new username : "+chat.username);
@@ -98,7 +96,7 @@ public class RW354_tut1_client {
          waitFor.start();
          //out.writeUTF("Hello from " + client.getLocalSocketAddress());
          
-         //String inputFromServer = in.readUTF(); // this is fucking up my shit
+         //String inputFromServer = in.readUTF(); 
          //System.out.println("Server says " + in.readUTF());
       } catch (IOException e) {
            JOptionPane.showMessageDialog(chat, "Could not connect to server : " + e);
@@ -123,12 +121,16 @@ public class RW354_tut1_client {
         try {
             out.writeUTF("@");
             out.writeUTF(usr);
+            
+                   
             out.close();
             outToServer.close();
             in.close();
             inFromServer.close();
             client.close();
+                    
             JOptionPane.showMessageDialog(chat, "Disconnected from Server");
+            chat.dispose();
         } catch (IOException ex) {
             Logger.getLogger(RW354_tut1_client.class.getName()).log(Level.SEVERE, null, ex);
         }

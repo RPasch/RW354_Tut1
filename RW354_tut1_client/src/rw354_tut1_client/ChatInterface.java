@@ -5,6 +5,7 @@
  */
 package rw354_tut1_client;
 import java.io.IOException;
+import static java.time.Clock.system;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -54,6 +55,11 @@ public class ChatInterface extends javax.swing.JFrame {
         IP_addr = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         Chat_txt.setEditable(false);
 
@@ -225,6 +231,13 @@ public class ChatInterface extends javax.swing.JFrame {
         IP = IP_addr.getText();
         
     }//GEN-LAST:event_IP_addrActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        //RW354_tut1_client.disconnect(username);
+       
+        dispose();
+    }//GEN-LAST:event_formWindowClosing
     public void printMsg(String msg, String FromWho ){
         Chat_txt.append( FromWho + ":" + msg +"\n");
     }
