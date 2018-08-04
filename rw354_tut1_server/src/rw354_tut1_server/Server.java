@@ -1,9 +1,11 @@
 package rw354_tut1_server;
 
+import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -19,6 +21,8 @@ public class Server extends Thread{
     static DataOutputStream out;
     static InputStream inFromClient;
     static DataInputStream in;
+    private static InputStream terminalIn = null;
+    private static BufferedReader br = null;
     public static ConcurrentHashMap<String, SocketHandler> listOfUsers = new ConcurrentHashMap<>();
     
     // use concurrent hashmap
@@ -26,6 +30,8 @@ public class Server extends Thread{
         int portNumber = 8000;//Integer.parseInt(args[0]);
         ServerSocket serverSocket = null;
         Socket clientSocket = null;        
+        
+        
         
         try {
             serverSocket = new ServerSocket(portNumber);
@@ -96,6 +102,21 @@ public class Server extends Thread{
         } catch (Exception e) {
             System.err.println("SERVER: "+ e);
         }
+        
+//        try {
+//            terminalIn = System.in;
+//            br = new BufferedReader(new InputStreamReader(terminalIn));
+//            String command = null;
+//            
+//            while((command = br.readLine()) != null){
+//                if (command.equals("exit")) {
+//                    //serverSocket.close();
+//                    System.exit(0);
+//                }
+//            }
+//        } catch (Exception e) {
+//            
+//        }
         
     }
     
