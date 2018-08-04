@@ -53,6 +53,8 @@ public class ChatInterface extends javax.swing.JFrame {
         disconnect_btn = new javax.swing.JButton();
         msg_txt = new javax.swing.JTextField();
         IP_addr = new javax.swing.JTextField();
+        reset_btn = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -109,6 +111,16 @@ public class ChatInterface extends javax.swing.JFrame {
             }
         });
 
+        reset_btn.setText("RESET");
+        reset_btn.setEnabled(false);
+        reset_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reset_btnActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("If server Disconnects , hit reset");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -136,6 +148,11 @@ public class ChatInterface extends javax.swing.JFrame {
                     .addComponent(send_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(disconnect_btn))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(reset_btn))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -156,7 +173,10 @@ public class ChatInterface extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(chat_choice_dropdown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(send_btn))
-                        .addGap(49, 49, 49))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(reset_btn)
+                            .addComponent(jLabel1)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(37, 37, 37)
                         .addComponent(msg_txt, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -198,6 +218,7 @@ public class ChatInterface extends javax.swing.JFrame {
 ////                return;
 //            }
             connect(serverName, username);
+            reset_btn.setEnabled(true);
             if(!valid_usrnm){
                 JOptionPane.showMessageDialog(rootPane, "Nickname already chosen");
             }
@@ -238,6 +259,32 @@ public class ChatInterface extends javax.swing.JFrame {
        
         dispose();
     }//GEN-LAST:event_formWindowClosing
+
+    private void reset_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reset_btnActionPerformed
+     
+        
+                try {
+                    // TODO add your handling code here:
+                    username = "";
+                    list = null;
+                    chat_choice_dropdown.removeAll();
+                    users_txt.setText("");
+                    Chat_txt.setText("");
+                    IP_addr.setText("Enter IP");
+                    username_txt.setText("Enter Username");
+                    
+                    RW354_tut1_client.out.close();
+                    RW354_tut1_client.outToServer.close();
+                    RW354_tut1_client.in.close();
+                    RW354_tut1_client.inFromServer.close();
+                    RW354_tut1_client.client.close();
+                } catch (Exception ex) {
+                    System.err.println("Error in reset : "+ ex);
+                }
+              
+        reset_btn.setEnabled(false);
+        
+    }//GEN-LAST:event_reset_btnActionPerformed
     public void printMsg(String msg, String FromWho ){
         Chat_txt.append( FromWho + ":" + msg +"\n");
     }
@@ -372,7 +419,9 @@ public class ChatInterface extends javax.swing.JFrame {
     private java.awt.Choice chat_choice_dropdown;
     private javax.swing.JButton connect_btn;
     private javax.swing.JButton disconnect_btn;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JTextField msg_txt;
+    private javax.swing.JButton reset_btn;
     private javax.swing.JButton send_btn;
     private javax.swing.JTextField username_txt;
     private java.awt.TextArea users_txt;
