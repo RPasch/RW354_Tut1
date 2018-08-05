@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 import rw354_tut1_client.RW354_tut1_client;
 import static javafx.application.Platform.exit;
 import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.YES_OPTION;
 import static rw354_tut1_client.RW354_tut1_client.connect;
 
 /**
@@ -213,8 +214,10 @@ public class ChatInterface extends javax.swing.JFrame {
             boolean validIP = false;
             username_txtActionPerformed(evt);
             IP_addrActionPerformed(evt);
-            if (username.equals("All")) {
+            while (username.equals("All")) {
+                username = "All"+(int)(Math.random()*100);
                 username = JOptionPane.showInputDialog("cannot choose 'ALL' as your username. \n Choose a new one.");
+                
                 username_txt.setText(username);
             }
             connect(serverName, username);
