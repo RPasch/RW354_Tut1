@@ -16,44 +16,41 @@ import static rw354_tut1_client.RW354_tut1_client.receiveMsg;
  */
 public class waitForMessage extends Thread {
 
-    
     ChatInterface chat = null;
+
     public waitForMessage(ChatInterface chat) {
         this.chat = chat;
-        
+
     }
-    
+
     @Override
-    public void run(){
-    
+    public void run() {
+
         try {
             waitForMsg(chat);
         } catch (IOException ex) {
-            System.out.println("Error in WaitForMessage : "+ ex);
+            System.err.println("Error in WaitForMessage : " + ex);
         }
-        
+
     }
-    
-    
-     public static void waitForMsg(ChatInterface chat) throws IOException{
-         
+
+    public static void waitForMsg(ChatInterface chat) throws IOException {
+
         String list_of_users = RW354_tut1_client.receiveMsg();
         chat.addAllusers(list_of_users.substring(1, list_of_users.length()));
-         while(true){
-            
+        while (true) {
+
             String anything = RW354_tut1_client.receiveMsg();
             switch (anything.charAt(0)) {
                 case '&':
-                    System.out.println(list_of_users+ "\n");
                     String connectedUsr = anything.substring(1, anything.length());
-                    System.out.println(connectedUsr+ " conncetedUser");
                     chat.addAllusers(connectedUsr);
                     break;
                 case '#':
-                    
+
                     String disconnectedUsr = RW354_tut1_client.receiveMsg();
                     String list_of = RW354_tut1_client.receiveMsg().substring(1);
-                    chat.removeUsers(disconnectedUsr,list_of);
+                    chat.removeUsers(disconnectedUsr, list_of);
 //   chat.printConnection(whoDiscon, false);
                     break;
                 default:
@@ -62,9 +59,8 @@ public class waitForMessage extends Thread {
                     chat.printMsg(message, who);
                     break;
             }
-            
+
         }
-     }
-    
-    
+    }
+
 }

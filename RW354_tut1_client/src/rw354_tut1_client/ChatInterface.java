@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package rw354_tut1_client;
+
 import java.io.IOException;
 import static java.time.Clock.system;
 import java.util.Arrays;
@@ -15,26 +16,26 @@ import rw354_tut1_client.RW354_tut1_client;
 import static javafx.application.Platform.exit;
 import javax.swing.JOptionPane;
 import static rw354_tut1_client.RW354_tut1_client.connect;
-import static rw354_tut1_client.RW354_tut1_client.valid_con;
-import static rw354_tut1_client.RW354_tut1_client.valid_usrnm;
 
 /**
  *
  * @author rabbp
  */
 public class ChatInterface extends javax.swing.JFrame {
+
     String username;
     String msg;
     String serverName = RW354_tut1_client.getServerName();
-    String IP ;
-    List<String> list = null; 
+    String IP;
+    List<String> list = null;
+
     /**
      * Creates new form ChatInterface
      */
     public ChatInterface() {
         initComponents();
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -192,9 +193,7 @@ public class ChatInterface extends javax.swing.JFrame {
             String msg_choice = chat_choice_dropdown.getSelectedItem();
             msg_txtActionPerformed(evt);
             RW354_tut1_client.sendMessage(msg, msg_choice);
-            
-            
-            //printMsg(msg, msg_choice);
+
         } catch (IOException ex) {
             System.out.println("SENDING ERROR" + ex);
         }
@@ -203,6 +202,7 @@ public class ChatInterface extends javax.swing.JFrame {
     private void username_txtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_username_txtActionPerformed
         // TODO add your handling code here:
         username = username_txt.getText();
+
     }//GEN-LAST:event_username_txtActionPerformed
 
     private void connect_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connect_btnActionPerformed
@@ -217,21 +217,15 @@ public class ChatInterface extends javax.swing.JFrame {
 //                JOptionPane.showMessageDialog(rootPane, "invalid IP");
 ////                return;
 //            }
+            if (username.equals("All")) {
+                username = JOptionPane.showInputDialog("cannot choose 'ALL' as your username. \n Choose a new one.");
+                username_txt.setText(username);
+            }
             connect(serverName, username);
             reset_btn.setEnabled(true);
-            if(!valid_usrnm){
-                JOptionPane.showMessageDialog(rootPane, "Nickname already chosen");
-            }
-            if(valid_con){
-                
-               
-            } else{
-                JOptionPane.showMessageDialog(rootPane, "Connection Failed");
-            }
-        } catch (IOException ex) {
-          JOptionPane.showMessageDialog(rootPane, "Server not responding : " + ex);
 
-            Logger.getLogger(ChatInterface.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(rootPane, "Server not responding : " + ex);
         }
     }//GEN-LAST:event_connect_btnActionPerformed
 
@@ -250,59 +244,59 @@ public class ChatInterface extends javax.swing.JFrame {
     private void IP_addrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IP_addrActionPerformed
         // TODO add your handling code here:
         IP = IP_addr.getText();
-        
+
     }//GEN-LAST:event_IP_addrActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
         RW354_tut1_client.disconnect(username);
-       
         dispose();
     }//GEN-LAST:event_formWindowClosing
 
     private void reset_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reset_btnActionPerformed
-     
-        
-                try {
-                    // TODO add your handling code here:
-                    username = "";
-                    list = null;
-                    chat_choice_dropdown.removeAll();
-                    users_txt.setText("");
-                    Chat_txt.setText("");
-                    IP_addr.setText("Enter IP");
-                    username_txt.setText("Enter Username");
-                    
-                    RW354_tut1_client.out.close();
-                    RW354_tut1_client.outToServer.close();
-                    RW354_tut1_client.in.close();
-                    RW354_tut1_client.inFromServer.close();
-                    RW354_tut1_client.client.close();
-                } catch (Exception ex) {
-                    System.err.println("Error in reset : "+ ex);
-                }
-              
-        reset_btn.setEnabled(false);
-        
-    }//GEN-LAST:event_reset_btnActionPerformed
-    public void printMsg(String msg, String FromWho ){
-        Chat_txt.append( FromWho + ":" + msg +"\n");
-    }
-    public void printConnection(String toWho,boolean connectDis ){
-        if(connectDis){
-            Chat_txt.append( toWho + " is connected \n");
-        }else{
-            Chat_txt.append( toWho + "  disconected\n");
+
+        try {
+            // TODO add your handling code here:
+            username = "";
+            list = null;
+            chat_choice_dropdown.removeAll();
+            users_txt.setText("");
+            Chat_txt.setText("");
+            IP_addr.setText("Enter IP");
+            username_txt.setText("Enter Username");
+
+            RW354_tut1_client.out.close();
+            RW354_tut1_client.outToServer.close();
+            RW354_tut1_client.in.close();
+            RW354_tut1_client.inFromServer.close();
+            RW354_tut1_client.client.close();
+        } catch (Exception ex) {
+            System.err.println("Error in reset : " + ex);
         }
-        
+
+        reset_btn.setEnabled(false);
+
+    }//GEN-LAST:event_reset_btnActionPerformed
+    public void printMsg(String msg, String FromWho) {
+        Chat_txt.append(FromWho + ":" + msg + "\n");
     }
-    public void addUsr(String usr){
-        users_txt.append( usr + "\n");
+
+    public void printConnection(String toWho, boolean connectDis) {
+        if (connectDis) {
+            Chat_txt.append(toWho + " is connected \n");
+        } else {
+            Chat_txt.append(toWho + "  disconected\n");
+        }
+
+    }
+
+    public void addUsr(String usr) {
+        users_txt.append(usr + "\n");
         chat_choice_dropdown.add(usr);
-        
+
     }
-    
-    public void removeUsers(String user,String list_of_users){
+
+    public void removeUsers(String user, String list_of_users) {
         List<String> tempList = Arrays.asList(list_of_users.split(","));
         list = tempList;
         printConnection(user, false);
@@ -311,73 +305,58 @@ public class ChatInterface extends javax.swing.JFrame {
         users_txt.append("All \n");
         chat_choice_dropdown.add("All \n");
         for (int i = 0; i < list.size(); i++) {
-                        addUsr(list.get(i));
+            addUsr(list.get(i));
         }
     }
-    
+
     public void addAllusers(String list_of_users) {
-        String newUsr= "";
+        String newUsr = "";
         chat_choice_dropdown.removeAll();
         users_txt.setText("");
         users_txt.append("All \n");
         chat_choice_dropdown.add("All");
         List<String> tempList = Arrays.asList(list_of_users.split(","));
-         if (list == null){
-             list = tempList;
-             newUsr = username;
-         }else{
-             System.out.println(list + " list \n " + tempList + " tmep list");
-             for(String s : tempList){
-                 if(!list.contains(s)){
-                     newUsr = s;
-                     System.out.println(newUsr+ " this is new user");
-                 }
-             }
-             list = tempList;
-         }
+        if (list == null) {
+            list = tempList;
+            newUsr = username;
+        } else {
+            for (String s : tempList) {
+                if (!list.contains(s)) {
+                    newUsr = s;
+                }
+            }
+            list = tempList;
+        }
         printConnection(newUsr, true);
         for (int i = 0; i < list.size(); i++) {
-                        addUsr(list.get(i));
+            addUsr(list.get(i));
         }
     }
-    public static boolean checkIP(String ip){
-        boolean valid = false;
-//        if(ip.substring(0, 8).equals("146.232.")){
-//            String ip_sub = ip.substring(8,10);
-//            int ip_sub_int = Integer.parseInt(ip_sub);
-//            if(ip.charAt(10) == '.'){
-//                if(ip_sub_int > 10 && ip_sub_int<99 ){
-//                   int ip_sub_int_two = Integer.parseInt(ip.substring(11,14));
-//                    System.out.println(ip.substring(11,14));
-//                   if(ip_sub_int_two>=100 && ip_sub_int_two<=255){
-//                       valid = true;
-//                   }
-//                }
-//            }
-//        }
 
+    public static boolean checkIP(String ip) {
+        boolean valid = false;
         Scanner sc = new Scanner(ip);
         sc.useDelimiter("\\.");
         String part1 = sc.next();//Integer.parseInt(sc.next());
-        String  part2 = sc.next();
-        String  part3 = sc.next();
-        String  part4 = sc.next();
+        String part2 = sc.next();
+        String part3 = sc.next();
+        String part4 = sc.next();
         sc.close();
-        System.out.println("part3 : " + ip );
         int part3_i = Integer.parseInt(part3);
         int part4_i = Integer.parseInt(part4);
-        if(part1.equals("146")){
-            if(part2.equals("232")){
-                if(part3_i >=10 && part3_i<=99){
-                    if(part4_i >= 100 && part4_i<=255){
+        if (part1.equals("146")) {
+            if (part2.equals("232")) {
+                if (part3_i >= 10 && part3_i <= 99) {
+                    if (part4_i >= 100 && part4_i <= 255) {
                         valid = true;
                     }
                 }
             }
         }
-            
+
         return valid;
     }
+
     /**
      * @param args the command line arguments
      */
@@ -427,5 +406,4 @@ public class ChatInterface extends javax.swing.JFrame {
     private java.awt.TextArea users_txt;
     // End of variables declaration//GEN-END:variables
 
-    
 }
