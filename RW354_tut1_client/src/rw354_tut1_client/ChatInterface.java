@@ -205,18 +205,14 @@ public class ChatInterface extends javax.swing.JFrame {
 
     }//GEN-LAST:event_username_txtActionPerformed
 
+    //Calls the connect method to connect to the client
+    //Checks the username entered
     private void connect_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connect_btnActionPerformed
         try {
             // TODO add your handling code here:
             boolean validIP = false;
             username_txtActionPerformed(evt);
             IP_addrActionPerformed(evt);
-//validIP = checkIP(IP);
-//            if(!validIP){
-//                
-//                JOptionPane.showMessageDialog(rootPane, "invalid IP");
-////                return;
-//            }
             if (username.equals("All")) {
                 username = JOptionPane.showInputDialog("cannot choose 'ALL' as your username. \n Choose a new one.");
                 username_txt.setText(username);
@@ -253,6 +249,9 @@ public class ChatInterface extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_formWindowClosing
 
+    //Closes all DataStreams and closes socket
+    //Resets the entire gui to be used for a new server
+    //Only to be used when you want to disconnect or if the server disconnected
     private void reset_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reset_btnActionPerformed
 
         try {
@@ -277,10 +276,12 @@ public class ChatInterface extends javax.swing.JFrame {
         reset_btn.setEnabled(false);
 
     }//GEN-LAST:event_reset_btnActionPerformed
+    //Prints the received message in the chat_txt
     public void printMsg(String msg, String FromWho) {
         Chat_txt.append(FromWho + ":" + msg + "\n");
     }
 
+    //prints the dis/connection of a user in chat_txt
     public void printConnection(String toWho, boolean connectDis) {
         if (connectDis) {
             Chat_txt.append(toWho + " is connected \n");
@@ -289,13 +290,13 @@ public class ChatInterface extends javax.swing.JFrame {
         }
 
     }
-
+    // Simply adds the new user to the dropdown list and to the list of connected clients
     public void addUsr(String usr) {
         users_txt.append(usr + "\n");
         chat_choice_dropdown.add(usr);
 
     }
-
+    //Removes a disconnected user from the list of users and the dropodown list
     public void removeUsers(String user, String list_of_users) {
         List<String> tempList = Arrays.asList(list_of_users.split(","));
         list = tempList;
@@ -308,7 +309,9 @@ public class ChatInterface extends javax.swing.JFrame {
             addUsr(list.get(i));
         }
     }
-
+    //This is called everytime a new user connects
+    //It updates the user list and also the dropdown list
+    //It updates the global list of users
     public void addAllusers(String list_of_users) {
         String newUsr = "";
         chat_choice_dropdown.removeAll();
@@ -332,12 +335,12 @@ public class ChatInterface extends javax.swing.JFrame {
             addUsr(list.get(i));
         }
     }
-
+    //Checks if the IP entered is a valid IP address
     public static boolean checkIP(String ip) {
         boolean valid = false;
         Scanner sc = new Scanner(ip);
         sc.useDelimiter("\\.");
-        String part1 = sc.next();//Integer.parseInt(sc.next());
+        String part1 = sc.next();
         String part2 = sc.next();
         String part3 = sc.next();
         String part4 = sc.next();

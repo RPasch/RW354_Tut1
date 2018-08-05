@@ -46,7 +46,10 @@ public class RW354_tut1_client {
         chat = new ChatInterface();
         chat.show();
     }
-
+    
+    //Connects the client sockect to the server socket. 
+    //Receivees the list of currently connected users and sends username.
+    // It calls method waitForMessage which starts a thread and conctantly looks for incoming messages
     public static void connect(String serverName, String usr) throws IOException {
         boolean validIP = false;
         try {
@@ -69,10 +72,7 @@ public class RW354_tut1_client {
             waitForMessage waitFor = new waitForMessage(chat);
 
             waitFor.start();
-            //out.writeUTF("Hello from " + client.getLocalSocketAddress());
-
-            //String inputFromServer = in.readUTF(); 
-            //System.out.println("Server says " + in.readUTF());
+            
         } catch (IOException e) {
             JOptionPane.showMessageDialog(chat, "Could not connect to server : " + e);
         }
@@ -92,7 +92,8 @@ public class RW354_tut1_client {
         out.writeUTF(msg);
 
     }
-
+    
+    // Disconnects the user : closes all dataStreams as well as the socket. It also notifies the Server beforehand
     public static void disconnect(String usr) {
         try {
             out.writeUTF("@");
@@ -110,21 +111,22 @@ public class RW354_tut1_client {
         }
 
     }
-
+    
     public static String receiveMsg() throws IOException {
         inFromServer = client.getInputStream();
         in = new DataInputStream(inFromServer);
         String inputFromServer = in.readUTF();
         return inputFromServer;
     }
-
+    
+    //Runs through list of usernames and check if the current username is already take , if so it assigns a new username
     public static boolean checkUsername(String list, String usrnm) {
         boolean valid = true;
         List<String> tempList = Arrays.asList(list.split(","));
         if (tempList.contains(usrnm)) {
             valid = false;
             double randomInt = (Math.random());
-            chat.username = chat.username + (int) (randomInt * 100);
+            chat.username = chat.username + (int) (randomInt * 1000);
         }
 
         return valid;

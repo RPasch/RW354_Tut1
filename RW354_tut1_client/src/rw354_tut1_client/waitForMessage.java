@@ -33,7 +33,9 @@ public class waitForMessage extends Thread {
         }
 
     }
-
+    
+    //An infinitw while loop the is looking for incoming messages
+    //It checks the code of the message and based on that categorizes the follwoing message
     public static void waitForMsg(ChatInterface chat) throws IOException {
 
         String list_of_users = RW354_tut1_client.receiveMsg();
@@ -51,7 +53,6 @@ public class waitForMessage extends Thread {
                     String disconnectedUsr = RW354_tut1_client.receiveMsg();
                     String list_of = RW354_tut1_client.receiveMsg().substring(1);
                     chat.removeUsers(disconnectedUsr, list_of);
-//   chat.printConnection(whoDiscon, false);
                     break;
                 default:
                     String who = anything;
