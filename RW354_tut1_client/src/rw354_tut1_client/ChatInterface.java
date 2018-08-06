@@ -292,7 +292,7 @@ public class ChatInterface extends javax.swing.JFrame {
         if (connectDis) {
             Chat_txt.append(toWho + " is connected \n");
         } else {
-            Chat_txt.append(toWho + "  disconected\n");
+            Chat_txt.append(toWho + "  disconnected\n");
         }
 
     }
