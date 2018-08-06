@@ -23,9 +23,7 @@ public class SocketHandler implements Runnable {
 
     @Override
     public void run() {
-        System.out.println("yup this client has a thread");
-        //Server.broadcast(username, "I shat mah pants");
-        
+        System.out.println("new client thread created");        
         try {
             inFromClient = clientSocket.getInputStream(); 
             in = new DataInputStream(inFromClient);
@@ -37,7 +35,6 @@ public class SocketHandler implements Runnable {
             try {
                 String toUser = in.readUTF();
                 String message = in.readUTF();
-                //System.out.println("deez nuts");
                 if (toUser.equals("All")) {
                     Server.broadcast(username, message);
                 } else if (toUser.equals("@")) {
@@ -51,11 +48,9 @@ public class SocketHandler implements Runnable {
                     }
                     in.close();
                     inFromClient.close();
-                    //clientSocket.close();
                 } else {
                     Server.whisper(username, toUser, message);
                 }
-                //System.out.println("her nutz");
             } catch (IOException ex) {
                 System.err.println(ex);
                 //bc that user disconnected
@@ -74,15 +69,4 @@ public class SocketHandler implements Runnable {
         return clientSocket;
     }
     
-    //        try {
-    //            inFromClient = clientSocket.getInputStream(); 
-    //            in = new DataInputStream(inFromClient);
-    //            String message = in.readUTF();
-    //            Server.broadcast(message);
-    //        } catch (Exception e) {
-    //            
-    //        }
-    //        
-    //        Listener listener = new Listener(clientSocket);
-    //        listener.start();
 }

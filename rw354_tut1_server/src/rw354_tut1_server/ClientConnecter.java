@@ -34,34 +34,19 @@ public class ClientConnecter extends Thread {
                 outFromServer = clientSocket.getOutputStream();
                 out = new DataOutputStream(outFromServer);
 
-                                System.out.println("THIS IS NULL  ONE");
-                System.out.println("HHH "+ Server.getListOfUsers());
-                
                 out.writeUTF(Server.getListOfUsers());
-                //System.out.println("THIS IS NULL  TWO");
                 String username = in.readUTF();
                 
                 SocketHandler sh = new SocketHandler(username, clientSocket);
-                //sh.start();
                 Thread t = new Thread(sh);
-                //add to the hashmap
                 t.start();
-                //if(Server.listOfUsers == null){
-                //    System.out.println("THIS IS NULL  JKLH");
-                //}
+                
                 Server.listOfUsers.put(username, sh);
-                System.out.println(Server.listOfUsers);
                 
                 System.out.println("Welcome: "+username+" to the chat");
                 
                 String userList = Server.getListOfUsers();
-                Server.sendUserList(userList);
-                //out.writeUTF(userList);
-//                
-//                in.close();
-//                out.close();
-//                
-                 
+                Server.sendUserList(userList);                 
             } catch (Exception e) {
                 System.err.println("SERVER2 "+e);
             }
