@@ -128,7 +128,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="username_txt">
       <Properties>
-        <Property name="text" type="java.lang.String" value="BloodRabz"/>
+        <Property name="text" type="java.lang.String" value="Enter Username"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="username_txtActionPerformed"/>
@@ -160,7 +160,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="IP_addr">
       <Properties>
-        <Property name="text" type="java.lang.String" value="146.232.50.101"/>
+        <Property name="text" type="java.lang.String" value="Enter IP Address"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="IP_addrActionPerformed"/>

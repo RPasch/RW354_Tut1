@@ -8,6 +8,7 @@ package rw354_tut1_client;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import static rw354_tut1_client.RW354_tut1_client.receiveMsg;
 
 /**
@@ -29,7 +30,9 @@ public class waitForMessage extends Thread {
         try {
             waitForMsg(chat);
         } catch (IOException ex) {
-            System.err.println("Error in WaitForMessage : " + ex);
+            ChatInterface.connected = false;
+            JOptionPane.showMessageDialog(chat,"You are disconnected from the server.");
+            
         }
 
     }

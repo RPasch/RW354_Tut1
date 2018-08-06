@@ -14,8 +14,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import rw354_tut1_client.RW354_tut1_client;
 import static javafx.application.Platform.exit;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.YES_OPTION;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import static rw354_tut1_client.RW354_tut1_client.chat;
 import static rw354_tut1_client.RW354_tut1_client.connect;
 
 /**
@@ -23,7 +27,7 @@ import static rw354_tut1_client.RW354_tut1_client.connect;
  * @author rabbp
  */
 public class ChatInterface extends javax.swing.JFrame {
-
+    public static boolean connected = false;
     String username;
     String msg;
     String serverName = RW354_tut1_client.getServerName();
@@ -78,7 +82,7 @@ public class ChatInterface extends javax.swing.JFrame {
 
         chat_choice_dropdown.add("All");
 
-        username_txt.setText("BloodRabz");
+        username_txt.setText("Enter Username");
         username_txt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 username_txtActionPerformed(evt);
@@ -106,7 +110,7 @@ public class ChatInterface extends javax.swing.JFrame {
             }
         });
 
-        IP_addr.setText("146.232.50.101");
+        IP_addr.setText("Enter IP Address");
         IP_addr.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 IP_addrActionPerformed(evt);
@@ -214,15 +218,13 @@ public class ChatInterface extends javax.swing.JFrame {
             boolean validIP = false;
             username_txtActionPerformed(evt);
             IP_addrActionPerformed(evt);
-            while (username.equals("All")) {
+            if (username.equals("All")) {
                 username = "All"+(int)(Math.random()*100);
-                username = JOptionPane.showInputDialog("cannot choose 'ALL' as your username. \n Choose a new one.");
-                
-                username_txt.setText(username);
+                JOptionPane.showMessageDialog(rootPane,"Cannot choose 'ALL' as your username. Your new Username is : " + username);
             }
             connect(serverName, username);
             reset_btn.setEnabled(true);
-
+            connected = true;
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(rootPane, "Server not responding : " + ex);
         }
@@ -231,7 +233,7 @@ public class ChatInterface extends javax.swing.JFrame {
     private void msg_txtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_msg_txtActionPerformed
         // TODO add your handling code here:
         msg = msg_txt.getText();
-
+        
     }//GEN-LAST:event_msg_txtActionPerformed
 
     private void disconnect_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_disconnect_btnActionPerformed
@@ -248,8 +250,9 @@ public class ChatInterface extends javax.swing.JFrame {
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
-        RW354_tut1_client.disconnect(username);
         dispose();
+        RW354_tut1_client.disconnect(username);
+        
     }//GEN-LAST:event_formWindowClosing
 
     //Closes all DataStreams and closes socket

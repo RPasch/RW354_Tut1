@@ -96,6 +96,7 @@ public class RW354_tut1_client {
     // Disconnects the user : closes all dataStreams as well as the socket. It also notifies the Server beforehand
     public static void disconnect(String usr) {
         try {
+            if(ChatInterface.connected){
             out.writeUTF("@");
             out.writeUTF(usr);
             out.close();
@@ -103,8 +104,7 @@ public class RW354_tut1_client {
             in.close();
             inFromServer.close();
             client.close();
-
-            JOptionPane.showMessageDialog(chat, "Disconnected from Server");
+            }
             chat.dispose();
         } catch (IOException ex) {
             System.err.println("Disconnection Error : " + ex);
